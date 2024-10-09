@@ -1,0 +1,68 @@
+<div id="page-topbar">
+    <div class="navbar-header">
+      <div class="d-flex p-4">
+        <div class="navbar-brand-box">
+          <a routerLink="/home/broker/brokerDashboard" class="logo logo-dark">
+            <span class="logo-sm">
+              <img src="assets/images/sm-logo.png" alt="Logo" height="22" />
+            </span>
+            <span class="logo-lg">
+              <img src="assets/images/lg-logo.png" alt="Logo" height="30" />
+            </span>
+          </a>
+          <a routerLink="/home/broker/brokerDashboard" class="logo logo-light">
+            <span class="logo-sm">
+              <img src="assets/images/sm-logo.png" alt="Logo" height="22" />
+            </span>
+            <span class="logo-lg">
+              <img src="assets/images/lg-logo.png" alt="Logo" height="30" />
+            </span>
+          </a>
+        </div>
+        <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
+          <i class="fa fa-fw fa-bars"></i>
+      </button>
+        <div>
+          <h5 class="ms-1 text-white mt-4 fw-normal">{{ ('app' | translate) +' '+ '>'+ ' ' + (sidebarService.currentSubModule | translate) }}
+          </h5>
+        </div>
+      </div>
+      <div class="d-flex">
+        <div class="app-search d-none d-lg-block col-m">
+          <div class="position-relative">
+            <input type="text" class="form-control" [placeholder]="'search_placeholder' | translate" />
+            <span class="bx bx-search-alt"></span>
+          </div>
+        </div>
+        <div class="dropdown d-inline-block d-lg-none ms-2">
+          <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="mdi mdi-magnify"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+            aria-labelledby="page-header-search-dropdown">
+          </div>
+        </div>
+        <div class="dropdown d-none d-lg-inline-block ms-1">
+          <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
+            <i class="bx bx-fullscreen"></i>
+          </button>
+        </div>
+        <div class="dropdown d-inline-block">
+          <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+            (click)="toggleDropdown()" aria-haspopup="true"
+            [attr.aria-expanded]="isDropdownVisible ? 'true' : 'false'">
+            <img class="rounded-circle header-profile-user" src="assets/images/user-icon.png" alt="user-icon"/>
+            <span class="d-none d-xl-inline-block ms-1">{{firstName}}</span>
+            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end" [ngClass]="{'show': isDropdownVisible}">
+            <a class="dropdown-item text-danger" (click)="logout()">
+              <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> {{ 'logout' | translate }}
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

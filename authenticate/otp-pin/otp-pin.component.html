@@ -1,0 +1,168 @@
+<div class="account-pages" id="bg-blue">
+  <div class="container">
+    <div class="row">
+      <div class="d-sm-flex align-items-center justify-content-between">
+        <div class="col-xl-8">
+          <!-- <h4 class="text-white mt-4 p-2">{{ 'pricing_title' | translate }}</h4> -->
+        </div>
+        <div class="col-xl-4 mt-3">
+          <button type="button" class="p-2 col-md-3 float-end btn-light text-large"(click)="onLogin()">{{ 'login' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- <div class="row justify-content-center pt-sm-5">
+      <div class="col-md-8 col-lg-6 col-xl-4">
+        <div class="card">
+          <div class="plan">
+            <div class="plan-inner">
+              <div class="entry-title">
+                <h3 class="text-white">{{ 'basic' | translate }}</h3>
+                <div class="price">$25<span>/month</span></div>
+              </div>
+              <div class="entry-content">
+                <ul>
+                  <li>{{ 'basic_description_1' | translate }}</li>
+                  <li>{{ 'basic_description_2' | translate }}</li>
+                  <li>{{ 'basic_description_3' | translate }}</li>
+                </ul>
+              </div>
+              <div class="btn blue">
+                <button type="button" class="btn btn-infoo mb-2">
+                  {{ 'info' | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8 col-lg-6 col-xl-4">
+        <div class="card overflow-hidden">
+          <div class="plan standard">
+            <div class="plan-inner">
+              <div class="entry-title">
+                <h3 class="text-white">{{ 'advance' | translate }}</h3>
+                <div class="price">$75<span>/month</span></div>
+              </div>
+              <div class="entry-content">
+                <ul>
+                  <li>{{ 'advance_description_1' | translate }}</li>
+                  <li>{{ 'advance_description_2' | translate }}</li>
+                  <li>{{ 'advance_description_3' | translate }}</li>
+                </ul>
+              </div>
+              <div class="btn brown">
+                <button type="button" class="btn btn-secondaryy mb-2">
+                  {{ 'primary' | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8 col-lg-6 col-xl-4">
+        <div class="card overflow-hidden">
+          <div class="plan ultimite">
+            <div class="plan-inner">
+              <div class="entry-title">
+                <h3 class="text-white">{{ 'enterprise' | translate }}</h3>
+                <div class="price">$99<span>/month</span></div>
+              </div>
+              <div class="entry-content">
+                <ul>
+                  <li>{{ 'enterprise_description_1' | translate }}</li>
+                  <li>{{ 'enterprise_description_2' | translate }}</li>
+                  <li>{{ 'enterprise_description_3' | translate }}</li>
+                </ul>
+              </div>
+              <div class="btn green">
+                <button type="button" class="btn btn-successs mb-2">
+                  {{ 'primary' | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="row justify-content-center pt-sm-5">
+    <div class="row">
+      <div class="col-xl-2 mx-auto">
+        <div class="page-title-box d-sm-flex justify-content-between text-center">
+          <h3 class="mb-sm-1 mt-4 otp-text">{{ 'otpVerification' | translate }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-5 mx-auto">
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="otpForm">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="d-flex align-items-center mb-3">
+                        <label class="form-label mb-0 me-2">{{ 'Username' | translate }}:</label>
+                        <p class="mb-0">{{sharedFormService.username}}</p>
+                      </div>
+                      <div class="d-flex align-items-center mb-3">
+                        <label class="form-label mb-0 me-2 text-edit">{{ 'emailId' | translate }}:</label>
+                        <p class="mb-0">{{sharedFormService.email}}</p>
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="mt-4 mt-sm-0">
+                        <label class="form-label mb-3"> </label>
+                        <label class="form-label mb-3"> </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+  <div class="hstack gap-3" formArrayName="obpPincode">
+    <ng-container *ngFor="let control of otpControls.controls; let i = index">
+      <input
+        id="otp-input-{{i}}"
+        class="form-control edit-otp"
+        [formControlName]="i"
+        type="text"
+        maxlength="1"
+        (input)="onInput($event, i)"
+        (keydown)="onKeyDown($event, i)"
+      />
+    </ng-container>
+  </div>
+              
+              <h5 class="mt-4 mb-4 text-end col-md-12">
+                {{ 'otpValidTill' | translate }}: <b>{{ countdown | number:'2.0' }}</b>
+                <span *ngIf="showResendOtp" class="resend-otp Resend-color" (click)="sendOtpRequest()">{{ 'resendOtp' | translate
+                  }}</span>
+              </h5>
+  
+              </div>
+              <div class="col-md-12 mx-auto text-center">
+                <button
+                  class="btn btn-successs next-btn"
+                  type="submit"
+                  [disabled]="otpForm.invalid"
+                  (click)="onSubmit()"
+                >
+                  {{ 'submit' | translate }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

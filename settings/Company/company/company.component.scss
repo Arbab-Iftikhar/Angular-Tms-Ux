@@ -1,0 +1,97 @@
+// Ensure no element gets a black background unless specified otherwise
+.profile-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: transparent; // Keep background transparent or inherit from parent
+  }
+  
+  .profile-icon {
+    font-size: 5rem;
+    color: #1aa86f; 
+  }
+  
+  .text-container {
+    width: 100px;
+    word-wrap: break-word;
+    white-space: normal;
+    height: 50px;
+    background: transparent; // Ensure no background color is applied
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: inherit; // Use the background from the parent or page
+  }
+  
+  .card-header, .card-body {
+    flex: 1;
+    background: inherit; // Keep the default background
+  }
+  
+  .card-equal {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: inherit; // Ensures no extra background is added
+  }
+  
+  .flex-grow-1 {
+    flex: 1;
+    background: inherit; // Maintain the same background
+  }
+  
+  .table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    background: inherit; // Ensure scrollable area doesn't introduce a new background
+  }
+  
+  #customButtonCss {
+    margin: 1%;
+    background: transparent; // Keep button background transparent if necessary
+  }
+  
+  .icon-custom {
+    font-size: 23px;
+    color: #17b82c;
+    background: transparent; // Ensure the icon doesn’t introduce a background
+  }
+  
+  .custom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0); // Fully transparent background
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .custom-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+ .modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-actions .btn {
+    padding: 5px 15px;
+    cursor: pointer;
+    margin: 0 5px; /* Adjust this value to reduce the space between buttons */
+}
+  

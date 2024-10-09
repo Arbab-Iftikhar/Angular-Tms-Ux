@@ -1,0 +1,118 @@
+<div class="account-pages" id="bg-blue">
+    <div class="container">
+      <div class="row">
+        <div class="d-sm-flex align-items-center justify-content-between">
+          <div class="col-xl-8">
+          </div>
+          <div class="col-xl-4 mt-3">
+            <button type="button" class="p-2 col-md-3 float-end btn-light text-large"(click)="onLogin()">{{ 'login' | translate }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="container">
+      <div class="row justify-content-center pt-sm-5">       
+      </div>
+  
+      <!-- Registration Form -->
+      <div class="row"  [attr.dir]="direction">
+        <div class="col-12">
+          <div class="page-title d-sm-flex align-items-center justify-content-between">
+            <h3 class="mb-sm-1 mt-4">{{ 'RegistrationForm' | translate }}</h3>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="signupForm" [attr.dir]="direction">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="name" class="form-label">{{'Name' | translate }}</label>
+                      <input type="text" id="name" formControlName="name" class="form-control">
+                      <div *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched" class="text-danger">
+                        <small *ngIf="signupForm.get('name')?.errors?.['required']">{{ 'nameRequired' | translate }}.</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="username" class="form-label">{{ 'Username' | translate }}</label>
+                      <input type="text" id="username" formControlName="username" class="form-control">
+                      <div *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched" class="text-danger">
+                        <small *ngIf="signupForm.get('username')?.errors?.['required']">{{ 'usernameRequired' | translate }}</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="email" class="form-label">{{ 'email' | translate }}</label>
+                      <input type="email" id="email" formControlName="email" class="form-control">
+                      <div *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" class="text-danger">
+                        <small *ngIf="signupForm.get('email')?.errors?.['required']">{{ 'emailRequired' | translate }}</small>
+                        <small *ngIf="signupForm.get('email')?.errors?.['email']">{{ 'emailInvalid' | translate }}</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="userPhone" class="form-label">{{
+                        'userPhone' | translate
+                        }}</label>
+                      <div class="input-group">
+                        <!-- Country Code Dropdown -->
+                        <select class="form-select" id="countryCode" formControlName="countryCode"
+                        formControlName="countryCode">
+                        <option *ngFor="let code of countryCodes" [value]="code.id">
+                          {{ code.name }}
+                      </option>
+                        </select>
+                      <input type="text" class="form-control" id="phone"  formControlName="phone"/>
+                         
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="password" class="form-label">{{ 'Password' | translate }}</label>
+                      <input type="password" id="password" formControlName="password" class="form-control">
+                      <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched" class="text-danger">
+                        <small *ngIf="signupForm.get('password')?.errors?.['required']">{{ 'PasswordRequired' | translate }}</small>
+                        <small *ngIf="signupForm.get('password')?.errors?.['minlength']">{{ 'Password6CharactersLong' | translate }}</small>
+                        <small *ngIf="signupForm.get('password')?.errors?.['pattern']">{{ 'PasswordPattern' | translate }}</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="confirmPassword" class="form-label">{{ 'confirmPassword' | translate }}</label>
+                      <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
+                      <div *ngIf="signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched" class="text-danger">
+                        <small *ngIf="signupForm.get('confirmPassword')?.errors?.['required']">{{ 'confirmPasswordRequired' | translate }}</small>
+                      </div>
+                      <!-- Password mismatch error should be shown if form has the mismatch error -->
+                      <div *ngIf="signupForm.hasError('mismatch') && signupForm.get('confirmPassword')?.touched" class="text-danger">
+                        <small>{{ 'passwordMismatch' | translate }}</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div>
+                  <button class="btn btn-primary float-end next-btn" type="submit" [disabled]="signupForm.invalid" (click)="onSubmit()">{{ 'nextButton' | translate }}</button>                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

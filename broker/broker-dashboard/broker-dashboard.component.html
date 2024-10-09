@@ -1,0 +1,243 @@
+<div id="layout-wrapper" class="">
+  <div class="inner-pg-sp">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="page-title-box justify-content-between">
+            <h3 class="text-mute">{{ 'dashboard' | translate }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3" *ngFor="let card of cardsData">
+          <div class="card mini-stats-wid">
+            <div class="card-body m-0 p-3" [ngClass]="card.colorClass">
+              <div class="d-flex">
+                <div class="flex-shrink-0 align-self-center">
+                  <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                    <span class="avatar-title rounded-circle bg-primary" [ngClass]="card.colorClass">
+                      <img [src]="card.imgSrc" alt="{{ card.label }}">
+                    </span>
+                  </div>
+                </div>
+                <div class="flex-grow-1 px-3 mt-2">
+                  <h3 class="mb-0">{{ card.value }}</h3>
+                  <h6 class="text-muted mt-1">{{ card.label | translate }}</h6>
+                </div>
+              </div>
+              <canvas [id]="card.sparklineId" style="height: 100px;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <ul class="nav nav-tabs" id="nav-br" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link" [ngClass]="{'active': activeTab === 'activeLoads'}"
+                    (click)="setActiveTab('activeLoads'); $event.preventDefault();" role="tab"
+                    [attr.aria-selected]="activeTab === 'activeLoads' ? 'true' : 'false'" [attr.aria-controls]="'activeLoads'">
+                    <span class="d-sm-block">{{ 'Active Loads' | translate }}</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [ngClass]="{'active': activeTab === 'pinnedLoads'}"
+                    (click)="setActiveTab('pinnedLoads'); $event.preventDefault();" role="tab"
+                    [attr.aria-selected]="activeTab === 'pinnedLoads' ? 'true' : 'false'" [attr.aria-controls]="'pinnedLoads'">
+                    <span class="d-sm-block">{{ 'Pinned Loads' | translate }}</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [ngClass]="{'active': activeTab === 'awaitingPickup'}"
+                    (click)="setActiveTab('awaitingPickup'); $event.preventDefault();" role="tab"
+                    [attr.aria-selected]="activeTab === 'awaitingPickup' ? 'true' : 'false'"
+                    [attr.aria-controls]="'awaitingPickup'">
+                    <span class="d-sm-block">{{ 'Awaiting Pickup' | translate }}</span>
+                  </a>
+                </li>
+              </ul>
+              <div class="tab-content pt-3 text-muted">
+                <div class="tab-pane" [ngClass]="{'active': activeTab === 'activeLoads'}" id="activeLoads" role="tabpanel"
+                  aria-labelledby="home-tab">
+                  <div class="table-responsive">
+                    <table class="table align-middle table-nowrap mb-0 border">
+                      <thead class="table-light">
+                        <tr>
+                          <th class="align-middle">{{ 'shipmentId' | translate }}</th>
+                          <th class="align-middle">{{ 'status' | translate }}</th>
+                          <!-- <th class="align-middle">{{ 'shipmentName' | translate }}</th> -->
+                          <th class="align-middle">{{ 'estimatedTime' | translate }}</th>
+                          <th class="align-middle">{{ 'estimatedCost' | translate }}</th>
+                          <th class="align-middle">{{ 'originAddress' | translate }}</th>
+                          <th class="align-middle">{{ 'loadDates' | translate }}</th>
+                          <th class="align-middle">{{ 'destinationAddress' | translate }}</th>
+                          <th class="align-middle">{{ 'loadSize' | translate }}</th>
+                          <th class="align-middle">{{ 'trailerTypes' | translate }}</th>
+                          <th class="align-middle">{{ 'length' | translate }}</th>
+                          <th class="align-middle">{{ 'weight' | translate }}</th>
+                          <th class="align-middle">{{ 'estimatedMiles' | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngIf="activeLoads.length > 0; else noData">
+                          <tr *ngFor="let item of activeLoads" (click)="viewLoadDetails(item)">
+                            <td>{{item.shipmentId}}</td>
+                            <!-- <td>{{ item.shipmentName }}</td> -->
+                            <td [ngStyle]="{
+                              'color': item.status === 1 ? 'green' : 
+                              item.status === 2 ? 'red' : 
+                              item.status === 3 ? 'blue' : 
+                              item.status === 9 ? '#c4a000' : 
+                                      'black'
+                              }">                       
+                           {{ item.statusDescription }}
+                          </td>
+                            <td>{{ item.estimatedTime }}</td>
+                            <td>{{ item.estimatedCost }}</td>
+                           
+                            <td>{{ item.originAddress }}</td>
+                            <td>{{ item.loadDate }}</td>
+                            <td>{{ item.destinationAddress }}</td>
+                            <td>{{ item.loadSize }}</td>
+                            <td>{{ item.trailerType }}</td>
+                            <td>{{ item.length }}></td>
+                            <td>{{ item.weight }}</td>
+                            <td>{{ item.estimatedMiles }}</td>
+                          </tr>
+                        </ng-container>
+                        <ng-template #noData>
+                          <tr>
+                            <td colspan="13" class="text-center">No data available</td>
+                          </tr>
+                        </ng-template>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="tab-pane" [ngClass]="{'active': activeTab === 'awaitingPickup'}" id="awaitingPickup" role="tabpanel"
+                  aria-labelledby="messages-tab">
+                  <div class="table-responsive">
+                    <table class="table align-middle table-nowrap mb-0 border">
+                      <thead class="table-light">
+                        <tr>
+                          <th class="align-middle">{{ 'shipmentId' | translate }}</th>
+                          <th class="align-middle">{{ 'status' | translate }}</th>
+                          <!-- <th class="align-middle">{{ 'shipmentName' | translate }}</th> -->
+                          <th class="align-middle">{{ 'estimatedTime' | translate }}</th>
+                          <th class="align-middle">{{ 'estimatedCost' | translate }}</th>
+                          <th class="align-middle">{{ 'originAddress' | translate }}</th>
+                          <th class="align-middle">{{ 'loadDates' | translate }}</th>
+                          <th class="align-middle">{{ 'destinationAddress' | translate }}</th>
+                          <th class="align-middle">{{ 'loadSize' | translate }}</th>
+                          <th class="align-middle">{{ 'trailerTypes' | translate }}</th>
+                          <th class="align-middle">{{ 'length' | translate }}</th>
+                          <th class="align-middle">{{ 'weight' | translate }}</th>
+                          <th class="align-middle">{{ 'estimatedMiles' | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngIf="awaitingPickup.length > 0; else noData">
+                          <tr *ngFor="let item of awaitingPickup">
+                            <td>{{item.shipmentId}}</td>
+                            <!-- <td>{{ item.shipmentName }}</td> -->
+                            <td>{{item.shipmentId}}</td>
+                            <!-- <td>{{ item.shipmentName }}</td> -->
+                            <td [ngStyle]="{
+                              'color': item.status === 1 ? 'green' : 
+                              item.status === 2 ? 'red' : 
+                              item.status === 3 ? 'blue' : 
+                              item.status === 9 ? '#c4a000' : 
+                                      'black'
+                              }">                       
+                           {{ item.statusDescription }}
+                          </td>
+                            <td>{{ item.estimatedTime }}</td>
+                            <td>{{ item.estimatedCost }}</td>
+                            <td>{{ item.originAddress }}</td>
+                            <td>{{ item.loadDate }}</td>
+                            <td>{{ item.destinationAddress }}</td>
+                            <td>{{ item.loadSize }}</td>
+                            <td>{{ item.trailerType }}</td>
+                            <td>{{ item.length }}</td>
+                            <td>{{ item.weight }}</td>
+                            <td>{{ item.estimatedMiles }}</td>
+                          </tr>
+                        </ng-container>
+                        <ng-template #noData>
+                          <tr>
+                            <td colspan="13" class="text-center">No data available</td>
+                          </tr>
+                        </ng-template>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="tab-pane" [ngClass]="{'active': activeTab === 'pinnedLoads'}" id="pinnedLoads" role="tabpanel"
+                aria-labelledby="messages-tab">
+                <div class="table-responsive">
+                  <table class="table align-middle table-nowrap mb-0 border">
+                    <thead class="table-light">
+                      <tr>
+                        <th class="align-middle">{{ 'shipmentId' | translate }}</th>
+                        <th class="align-middle">{{ 'status' | translate }}</th>
+                        <!-- <th class="align-middle">{{ 'shipmentName' | translate }}</th> -->
+                        <th class="align-middle">{{ 'estimatedTime' | translate }}</th>
+                        <th class="align-middle">{{ 'estimatedCost' | translate }}</th>
+                        <th class="align-middle">{{ 'originAddress' | translate }}</th>
+                        <th class="align-middle">{{ 'loadDates' | translate }}</th>
+                        <th class="align-middle">{{ 'destinationAddress' | translate }}</th>
+                        <th class="align-middle">{{ 'loadSize' | translate }}</th>
+                        <th class="align-middle">{{ 'trailerTypes' | translate }}</th>
+                        <th class="align-middle">{{ 'length' | translate }}</th>
+                        <th class="align-middle">{{ 'weight' | translate }}</th>
+                        <th class="align-middle">{{ 'estimatedMiles' | translate }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngIf="isPinned.length > 0; else noData">
+                        <tr *ngFor="let item of isPinned" (click)="viewLoadDetails(item)">
+                          <td>{{item.shipmentId}}</td>
+                          <td>{{item.shipmentId}}</td>
+                            <!-- <td>{{ item.shipmentName }}</td> -->
+                            <td [ngStyle]="{
+                              'color': item.status === 1 ? 'green' : 
+                              item.status === 2 ? 'red' : 
+                              item.status === 3 ? 'blue' : 
+                              item.status === 9 ? '#c4a000' : 
+                                      'black'
+                              }">                       
+                           {{ item.statusDescription }}
+                          </td>
+                          <!-- <td>{{ item.shipmentName }}</td> -->
+                          <td>{{ item.estimatedTime }}</td>
+                          <td>{{ item.estimatedCost }}</td>
+                          <td>{{ item.originAddress }}</td>
+                          <td>{{ item.loadDate }}</td>
+                          <td>{{ item.destinationAddress }}</td>
+                          <td>{{ item.loadSize }}</td>
+                          <td>{{ item.trailerType }}</td>
+                          <td>{{ item.length }}</td>
+                          <td>{{ item.weight }}</td>
+                          <td>{{ item.estimatedMiles }}</td>
+                        </tr>
+                      </ng-container>
+                      <ng-template #noData>
+                        <tr>
+                          <td colspan="13" class="text-center">No data available</td>
+                        </tr>
+                      </ng-template>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

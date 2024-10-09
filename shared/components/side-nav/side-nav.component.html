@@ -1,0 +1,81 @@
+
+<div class="vertical-menu" (click)="handleMenuClick($event)">
+  <div id="sidebar-menu">
+    <ul class="metismenu list-unstyled" id="side-menu">
+      <li class="menu-title">{{ 'menu' | translate }}</li>
+      <li>
+        <a href="javascript: void(0);" class="has-arrow waves-effect" (click)="toggleMenu($event)">
+          <i class="bx bx-home-circle"></i>
+          <span>{{ 'dashboards' | translate }}</span>
+        </a>
+        <ul class="sub-menu" aria-expanded="false">
+          <li>
+            <a routerLink="/home/broker/brokerDashboard" routerLinkActive="active-submenu">{{ 'brokerDashboard' | translate }}</a>
+          </li>
+          <!-- <li>
+            <a routerLink="/home/admin/adminDashboard" routerLinkActive="active-submenu">{{ 'adminDashboard' | translate }}</a>
+          </li> -->
+        </ul>
+      </li>
+      <li>
+        <a href="javascript: void(0);" class="has-arrow waves-effect" (click)="toggleMenu($event)">
+          <i class="bx bx-layout"></i>
+          <span>{{"load" | translate}}</span>
+        </a>
+        <ul class="sub-menu" aria-expanded="true">
+          <li>
+            <a routerLink="/home/load/loadManagement" routerLinkActive="active-submenu">{{"load_management" | translate}}</a>
+          </li>
+          <li>
+            <a routerLink="/home/load/loadBoard" routerLinkActive="active-submenu">{{"loadBoard" | translate}}</a>
+          </li>
+          <!-- <li>
+            <a routerLink="/home/load/assignLoads" routerLinkActive="active-submenu">{{"assignLoads" | translate}}</a>
+          </li> -->
+        </ul>
+      </li>
+
+        <!-- CRUD For Comapny,Shipper and Driver -->
+        <li>
+          <a href="javascript: void(0);" class="has-arrow waves-effect" (click)="toggleMenu($event)">
+            <i class="bx bx-cog"></i>
+            <span>{{"Settings" | translate}}</span>
+          </a>
+          <ul class="sub-menu" aria-expanded="true">
+            <li>
+              <a routerLink="/home/settings/driver" routerLinkActive="active-submenu">{{"Driver" | translate}}</a>
+            </li>
+            <li>
+              <a routerLink="/home/settings/company" routerLinkActive="active-submenu">{{"Company" | translate}}</a>
+            </li>
+            <li>
+              <a routerLink="/home/settings/shipper" routerLinkActive="active-submenu">{{"Shipper" | translate}}</a>
+            </li>
+            <li>
+              <a routerLink="/home/settings/userListing" routerLinkActive="active-submenu">{{"Users" | translate}}</a>
+            </li>
+          </ul>
+        </li>
+  
+
+      <li>
+        <a href="javascript: void(0);" class="has-arrow waves-effect" (click)="toggleMenu($event)">
+          <i class="bx bx-map"></i>
+          <span>{{ 'tracking' | translate }}</span>
+        </a>
+        <ul class="sub-menu" aria-expanded="false">
+          <li><a routerLink="/home/load/enRouteLoads" routerLinkActive="active-submenu">{{ 'enRouteLoads' | translate }}</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript: void(0);" class="has-arrow waves-effect" (click)="toggleMenu($event)">
+          <i class="bx bx-help-circle"></i>
+          <span>Inquiry</span>
+        </a>
+        <ul class="sub-menu" aria-expanded="false">
+          <li><a routerLink="/home/inquiry/detailInquiry" routerLinkActive="active-submenu">{{'detailInquiry' | translate}}</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
