@@ -1,0 +1,59 @@
+.profile-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .profile-icon {
+    font-size: 5rem;
+    color: #1aa86f; 
+  }
+
+  
+.text-container {
+  width: 100px;
+  word-wrap: break-word;
+  white-space: normal;
+  height: 50px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header, .card-body {
+  flex: 1;
+}
+
+.card-equal {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.flex-grow-1 {
+  flex: 1;
+}
+
+.table-container {
+  max-height: 400px; 
+  overflow-y: auto;
+}
+
+#customButtonCss
+{
+  margin: 1%;
+}
+.icon-custom {
+  font-size: 23px;
+  color: #17b82c;
+}
+.icon-spacing {
+  padding-left: 12px; 
+}
+
+.hori-timeline{
+  max-width: 100%;
+}

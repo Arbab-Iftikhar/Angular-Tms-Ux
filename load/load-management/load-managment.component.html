@@ -1,0 +1,908 @@
+<div id="layout-wrapper">
+    <div class="inner-pg-sp">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mt-4 mb-3 d-sm-flex align-items-center justify-content-between">
+                        <h3 class="text-muted">{{ 'loadManagement' | translate }}</h3>
+                        <div>
+                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                <input type="radio" class="btn-check" id="btnradio4" [(ngModel)]="loadType"
+                                    name="loadType" value="manual" autocomplete="off" (click)="onSelect('manual')">
+                                <label class="btn btn-outline-secondary" for="btnradio4">{{ 'loadTypeManual' | translate
+                                    }}</label>
+
+                                <input type="radio" class="btn-check" id="btnradio5" [(ngModel)]="loadType"
+                                    name="loadType" value="import" autocomplete="off">
+                                <label class="btn btn-outline-secondary" for="btnradio5" (click)="onSelect('import')">{{
+                                    'loadTypeImportFile' | translate }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="loadType === 'manual'; else import" [attr.dir]="direction">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form [formGroup]="loadManagementForm">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="shipperName" class="form-label">{{ 'Name' | translate
+                                                }}:</label>
+                                            <div class="input-group">
+                                                <select class="form-select" id="shipper" formControlName="shipperId" [class.is-invalid]="loadManagementForm.get('shipperId')?.invalid && loadManagementForm.get('shipperId')?.touched"
+                                                    (change)="onShipperChange($event)">
+                                                    <option selected disabled value="" >{{ 'choose' | translate }}...
+                                                    </option>
+                                                    <option *ngFor="let shipper of shippers"
+                                                        [value]="shipper.shipperId">
+
+                                                        {{ shipper.shipperName }}
+                                                    </option>
+                                                </select>
+                                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target=".shipper"><i class="dripicons-plus "></i> {{
+                                                    'shipper' | translate
+                                                    }}</button>
+                                                    <div *ngIf="loadManagementForm.get('shipperId')?.invalid && loadManagementForm.get('shipperId')?.touched" class="invalid-feedback">
+                                                        {{ 'fieldRequired' | translate }}
+                                                      </div>
+                                            </div>
+                                            
+                                            <div class="modal fade shipper" tabindex="-1" role="dialog"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                    <div class="modal-content">
+                                                        <form [formGroup]="shipperForm">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">{{ 'addNewShipper' | translate
+                                                                    }}</h4>
+                                                                <button type="button" class="btn-close" (click)="ClearShipperForm()"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="mb-3">
+                                                                            <label for="name" class="form-label">{{
+                                                                                'shipperName' | translate }}:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="name" formControlName="name"
+                                                                                [class.is-invalid]="shipperForm.get('name')?.invalid && shipperForm.get('name')?.touched" />
+                                                                            <div *ngIf="shipperForm.get('name')?.invalid && shipperForm.get('name')?.touched"
+                                                                                class="invalid-feedback">
+                                                                                {{ 'fieldRequired' | translate }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="mb-3">
+                                                                            <label for="address" class="form-label">{{
+                                                                                'address' | translate }}:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="address"
+                                                                                formControlName="address" (input)="onAddressInput($event,'address')"
+                                                                                [class.is-invalid]="shipperForm.get('address')?.invalid && shipperForm.get('address')?.touched"/>
+                                                                            <div *ngIf="shipperForm.get('address')?.invalid && shipperForm.get('address')?.touched"
+                                                                                class="invalid-feedback">
+                                                                                {{ 'fieldRequired' | translate
+                                                                                }}
+                                                                            </div>
+                                                                            <div class="dropdown" *ngIf="sharedFormService.activeDropdown === 'address' && sharedFormService.suggestions.length > 0">
+                                                                                <ul class="dropdown-menu search-dropdown-menu show w-100">
+                                                                                  <li *ngFor="let suggestion of sharedFormService.suggestions" (click)="selectSuggestion(suggestion,shipperForm,'address')" class="dropdown-item search-dropdown-item">
+                                                                                    {{ suggestion.displayName }}
+                                                                                  </li>
+                                                                                </ul>
+                                                                              </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="mb-3">
+                                                                            <label for="province" class="form-label">{{
+                                                                                'province' | translate }}:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="province"
+                                                                                formControlName="province" 
+                                                                                [class.is-invalid]="shipperForm.get('province')?.invalid && shipperForm.get('province')?.touched" readonly/>
+                                                                            <div *ngIf="shipperForm.get('province')?.invalid && shipperForm.get('province')?.touched"
+                                                                                class="invalid-feedback">
+                                                                                {{ 'fieldRequired' | translate }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="mb-3">
+                                                                            <label for="city" class="form-label">{{
+                                                                                'city' | translate }}:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="city" formControlName="city"
+                                                                                [class.is-invalid]="shipperForm.get('city')?.invalid && shipperForm.get('city')?.touched" readonly/>
+                                                                            <div *ngIf="shipperForm.get('city')?.invalid && shipperForm.get('city')?.touched"
+                                                                                class="invalid-feedback">
+                                                                                {{ 'fieldRequired' | translate }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="mb-3">
+                                                                            <label for="contactInfo"
+                                                                                class="form-label">{{ 'phoneNumber' |
+                                                                                translate }}:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="contactInfo"
+                                                                                formControlName="contactInfo" 
+                                                                                [class.is-invalid]="shipperForm.get('contactInfo')?.invalid && shipperForm.get('contactInfo')?.touched"/>
+                                                                            <div *ngIf="shipperForm.get('contactInfo')?.invalid && shipperForm.get('contactInfo')?.touched"
+                                                                                class="invalid-feedback">
+                                                                                {{ 'fieldRequired' | translate }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <div class="form-check mb-3">
+                                                                    <input class="form-check-input text-muted"
+                                                                        type="checkbox">
+                                                                    <label
+                                                                        class="form-check-label text-muted font-size-14">
+                                                                        {{ 'createMore' | translate }}
+                                                                    </label>
+                                                                </div> -->
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-light px-3" type="button" (click)="ClearShipperForm()"
+                                                                    data-bs-dismiss="modal">{{ 'cancel' | translate
+                                                                    }}</button>
+                                                                <button class="btn btn-primary px-3" type="submit"
+                                                                    (click)="onShipperSubmit()"
+                                                                    [disabled]="shipperForm.invalid" data-bs-dismiss="modal">{{ 'submitButton' |
+                                                                    translate }}</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="loadManagementForm.get('shipperName')?.invalid && loadManagementForm.get('shipperName')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="shipmentName" class="form-label">{{ 'shipmentName' |
+                                                translate }}</label>
+                                            <input type="text" class="form-control" id="shipmentName"
+                                                formControlName="shipmentName"
+                                                [class.is-invalid]="loadManagementForm.get('shipmentName')?.invalid && loadManagementForm.get('shipmentName')?.touched">
+                                            <div *ngIf="loadManagementForm.get('shipmentName')?.invalid && loadManagementForm.get('shipmentName')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="originAddress" class="form-label">{{ 'originAddressLabel' |
+                                                translate }}</label>
+                                            <input type="text" class="form-control" id="originAddress"
+                                                formControlName="originAddress" [class.is-invalid]="loadManagementForm.get('originAddress')?.invalid && loadManagementForm.get('originAddress')?.touched"readonly>
+                                            <div *ngIf="loadManagementForm.get('originAddress')?.invalid && loadManagementForm.get('originAddress')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'originAddressInvalidFeedback' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="originProvince" class="form-label">{{ 'originProvinceLabel' |
+                                                translate }}</label>
+                                            <input type="text" class="form-control" id="originProvince"
+                                                formControlName="originProvince" [class.is-invalid]="loadManagementForm.get('originProvince')?.invalid && loadManagementForm.get('originProvince')?.touched" readonly>
+                                            <div *ngIf="loadManagementForm.get('originProvince')?.invalid && loadManagementForm.get('originProvince')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'originProvinceInvalidFeedback' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="originCity" class="form-label">{{ 'originCityLabel' | translate
+                                                }}</label>
+                                            <input type="text" class="form-control" id="originCity"
+                                                formControlName="originCity" [class.is-invalid]="loadManagementForm.get('originCity')?.invalid && loadManagementForm.get('originCity')?.touched"readonly>
+                                            <div *ngIf="loadManagementForm.get('originCity')?.invalid && loadManagementForm.get('originCity')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'originCityInvalidFeedback' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="consigneeName" class="form-label">{{ 'consigneeName' |
+                                                translate }}</label>
+                                            <input type="text" class="form-control" id="consigneeName"
+                                                formControlName="consigneeName" [class.is-invalid]="loadManagementForm.get('consigneeName')?.invalid && loadManagementForm.get('consigneeName')?.touched">
+                                            <div *ngIf="loadManagementForm.get('consigneeName')?.invalid && loadManagementForm.get('consigneeName')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="originRadius" class="form-label">{{ 'originRadiusLabel' |
+                                                translate }}</label>
+                                            <select class="form-select" id="originRadius"
+                                                formControlName="originRadius" [class.is-invalid]="loadManagementForm.get('originRadius')?.invalid && loadManagementForm.get('originRadius')?.touched">
+                                                <option selected disabled value="">{{ 'choose' | translate }}...
+                                                </option>
+                                                <option *ngFor="let radius of radius" [value]="radius.name">
+                                                    {{ radius.name }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="loadManagementForm.get('originRadius')?.invalid && loadManagementForm.get('originRadius')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="destinationAddress" class="form-label">{{
+                                                'destinationAddressLabel' | translate }}</label>
+                                            <input type="text" class="form-control" id="destinationAddress"
+                                                formControlName="destinationAddress" (input)="onAddressInput($event,'destinationAddress')"
+                                             [class.is-invalid]="loadManagementForm.get('destinationAddress')?.invalid && loadManagementForm.get('destinationAddress')?.touched">
+                                            <div *ngIf="loadManagementForm.get('destinationAddress')?.invalid && loadManagementForm.get('destinationAddress')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                            <div class="dropdown" *ngIf="sharedFormService.activeDropdown === 'destinationAddress' && sharedFormService.suggestions.length > 0">
+                                                <ul class="search-dropdown-menu dropdown-menu  show w-100">
+                                                  <li *ngFor="let suggestion of sharedFormService.suggestions" (click)="selectSuggestion(suggestion,loadManagementForm,'destinationAddress')" class="search-dropdown-item dropdown-item ">
+                                                    {{ suggestion.displayName }}
+                                                  </li>
+                                                </ul>
+                                              </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="destinationProvince" class="form-label">{{
+                                                'destinationProvinceLabel' | translate }}</label>
+                                            <input type="text" class="form-control" id="destinationProvince"
+                                            formControlName="destinationProvince"[class.is-invalid]="loadManagementForm.get('destinationProvince')?.invalid && loadManagementForm.get('destinationProvince')?.touched" readonly>
+                                            <div *ngIf="loadManagementForm.get('destinationProvince')?.invalid && loadManagementForm.get('destinationProvince')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="destinationCity" class="form-label">{{ 'destinationCityLabel' |
+                                                translate }}</label>
+                                            <input type="text" class="form-control" id="destinationCity" formControlName="destinationCity"
+                                         [class.is-invalid]="loadManagementForm.get('destinationCity')?.invalid && loadManagementForm.get('destinationCity')?.touched" readonly>
+                                            <div *ngIf="loadManagementForm.get('destinationCity')?.invalid && loadManagementForm.get('destinationCity')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="destinationRadius" class="form-label">{{
+                                                'destinationRadiusLabel' | translate }}</label>
+                                            <select class="form-select" id="destinationRadius"
+                                                formControlName="destinationRadius" [class.is-invalid]="loadManagementForm.get('destinationRadius')?.invalid && loadManagementForm.get('destinationRadius')?.touched">
+                                                <option selected disabled value="">{{ 'choose' | translate }}...
+                                                </option>
+                                                <option *ngFor="let radius of radius" [value]="radius.name">
+                                                    {{ radius.name }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="loadManagementForm.get('destinationRadius')?.invalid && loadManagementForm.get('destinationRadius')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="loadDate" class="form-label">{{ 'loadDateLabel' | translate
+                                                }}</label>
+                                            <div class="input-group">
+                                                <input type="datetime-local" class="form-control" id="loadDate"
+                                                    formControlName="loadDate" [class.is-invalid]="loadManagementForm.get('loadDate')?.invalid && loadManagementForm.get('loadDate')?.touched">
+                                                    <div *ngIf="loadManagementForm.get('loadDate')?.invalid && loadManagementForm.get('loadDate')?.touched"
+                                                    class="invalid-feedback">
+                                                    {{ 'fieldRequired' | translate }}
+                                                </div>
+                                            </div>
+                                            </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="deliveryDate" class="form-label">{{ 'deliveryDateLabel' |
+                                                translate }}</label>
+                                            <div class="input-group">
+                                                <input type="datetime-local" class="form-control" id="deliveryDate"
+                                                    formControlName="deliveryDate" [class.is-invalid]="loadManagementForm.get('deliveryDate')?.invalid && loadManagementForm.get('deliveryDate')?.touched">
+                                                    <div *ngIf="loadManagementForm.get('deliveryDate')?.invalid && loadManagementForm.get('deliveryDate')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                            </div>
+                                            </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="cargoDescription" class="form-label">{{ 'cargoDescriptionLabel'
+                                                | translate }}</label>
+                                            <input type="text" class="form-control" id="cargoDescription"
+                                                formControlName="cargoDescription" [class.is-invalid]="loadManagementForm.get('cargoDescription')?.invalid && loadManagementForm.get('cargoDescription')?.touched">
+                                            <div *ngIf="loadManagementForm.get('cargoDescription')?.invalid && loadManagementForm.get('cargoDescription')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="trailerType" class="form-label">{{ 'trailerTypeLabel' |
+                                                translate }}</label>
+                                            <select class="form-select" id="trailerType" formControlName="trailerType" 
+                                            [class.is-invalid]="loadManagementForm.get('trailerType')?.invalid && loadManagementForm.get('trailerType')?.touched">
+                                                <option selected disabled value="">{{ 'choose' | translate }}...
+                                                </option>
+                                                <option *ngFor="let type of trailerTypes" [value]="type.name">
+                                                    {{ type.name }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="loadManagementForm.get('trailerType')?.invalid && loadManagementForm.get('trailerType')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="loadSize" class="form-label">{{ 'loadSizeLabel' | translate
+                                                }}</label>
+                                            <select class="form-select" id="loadSize" formControlName="loadSize" 
+                                            [class.is-invalid]="loadManagementForm.get('loadSize')?.invalid && loadManagementForm.get('loadSize')?.touched">
+                                                <option selected disabled value="">{{ 'choose' | translate }}...
+                                                </option>
+                                                <option *ngFor="let size of loadSizes" [value]="size.id">
+                                                    {{ size.name }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="loadManagementForm.get('loadSize')?.invalid && loadManagementForm.get('loadSize')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="length" class="form-label">
+                                                {{ 'loadLengthLabel' | translate }}
+                                            </label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" style="width:80%" id="length" formControlName="length"
+                                                    [class.is-invalid]="loadManagementForm.get('length')?.invalid && loadManagementForm.get('length')?.touched"
+                                                    placeholder="Enter length">
+                                                <select class="form-select" formControlName="unitlength" aria-label="Select length unit"
+                                                    [class.is-invalid]="loadManagementForm.get('unitlength')?.invalid && loadManagementForm.get('unitlength')?.touched">
+                                                    <option *ngFor="let unit of lengthUnits" [value]="unit.name">
+                                                        {{ unit.name }}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="loadManagementForm.get('length')?.invalid && loadManagementForm.get('length')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                            <div *ngIf="loadManagementForm.get('unitlength')?.invalid && loadManagementForm.get('unitlength')?.touched" class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                              </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="weight" class="form-label">{{ 'loadWeightLabel' | translate
+                                                }}</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" style="width:80%" id="weight"
+                                                    formControlName="weight" 
+                                                    [class.is-invalid]="loadManagementForm.get('weight')?.invalid && loadManagementForm.get('weight')?.touched" placeholder="Enter weight">
+                                                    <select class="form-select" formControlName="unitWeight"
+                                                    [class.is-invalid]="loadManagementForm.get('unitWeight')?.invalid && loadManagementForm.get('unitWeight')?.touched" aria-label="Select weight unit">
+                                                        <option *ngFor="let unit of weightUnits" [value]="unit.name">
+                                                          {{ unit.name }}
+                                                        </option>
+                                                    </select>
+                                                    <div *ngIf="loadManagementForm.get('weight')?.invalid && loadManagementForm.get('weight')?.touched"
+                                                    class="invalid-feedback">
+                                                    {{ 'fieldRequired' | translate }}
+                                                </div>
+                                                <div *ngIf="loadManagementForm.get('unitWeight')?.invalid && loadManagementForm.get('unitWeight')?.touched" class="invalid-feedback">
+                                                    {{ 'fieldRequired' | translate }}
+                                                  </div>
+                                            </div>
+                                          
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="statuses" class="form-label">{{ 'statusLabel' | translate
+                                                }}</label>
+                                            <select class="form-select" id="statuses" formControlName="status"
+                                            [class.is-invalid]="loadManagementForm.get('status')?.invalid && loadManagementForm.get('status')?.touched">
+                                                <option selected disabled value="">{{ 'choose' | translate }}...
+                                                </option>
+                                                <option *ngFor="let name of status" [value]="name.status">
+                                                    {{ name.statusDescription }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="loadManagementForm.get('name')?.invalid && loadManagementForm.get('name')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                             <div *ngIf="loadManagementForm.get('loadStatus')?.invalid && loadManagementForm.get('loadStatus')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="estimatedCost" class="form-label">{{ 'estimatedCost' |
+                                                translate }}</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" style="width:80%" id="estimatedCost"
+                                                    formControlName="estimatedCost"
+                                                    [class.is-invalid]="loadManagementForm.get('estimatedCost')?.invalid && loadManagementForm.get('estimatedCost')?.touched" placeholder="Enter estimated cost">
+                                                    <select class="form-select" formControlName="unitCost"
+                                                    [class.is-invalid]="loadManagementForm.get('unitCost')?.invalid && loadManagementForm.get('unitCost')?.touched" aria-label="Select estimated cost">
+                                                        <option *ngFor="let unit of costUnits" [value]="unit.name">
+                                                          {{ unit.name }}
+                                                        </option>
+                                                    </select>
+                                                    <div *ngIf="loadManagementForm.get('estimatedCost')?.invalid && loadManagementForm.get('estimatedCost')?.touched"
+                                                    class="invalid-feedback">
+                                                    {{ 'fieldRequired' | translate }}
+                                                </div>
+                                                <div *ngIf="loadManagementForm.get('unitCost')?.invalid && loadManagementForm.get('unitCost')?.touched" class="invalid-feedback">
+                                                    {{ 'fieldRequired' | translate }}
+                                                  </div>  
+                                            </div>
+                                                                                  
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="estimatedTime" class="form-label">{{ 'estimatedTime' |
+                                                translate }}</label>
+                                            <input type="number" class="form-control" id="estimatedTime"
+                                                formControlName="estimatedTime"
+                                                [class.is-invalid]="loadManagementForm.get('estimatedTime')?.invalid && loadManagementForm.get('estimatedTime')?.touched">
+                                            <div *ngIf="loadManagementForm.get('estimatedTime')?.invalid && loadManagementForm.get('estimatedTime')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="estimatedMiles" class="form-label">{{ 'estimatedMiles' |
+                                                translate }}</label>
+                                            <input type="number" class="form-control" id="estimatedMiles"
+                                                formControlName="estimatedMiles"
+                                                [class.is-invalid]="loadManagementForm.get('estimatedMiles')?.invalid && loadManagementForm.get('estimatedMiles')?.touched">
+                                            <div *ngIf="loadManagementForm.get('estimatedMiles')?.invalid && loadManagementForm.get('estimatedMiles')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="postingAttribute" class="form-label">{{
+                                                'postingAttribute' | translate }}</label>
+                                            <select class="form-select" id="postingAttribute"
+                                                formControlName="postingAttribute" 
+                                                [class.is-invalid]="loadManagementForm.get('postingAttribute')?.invalid && loadManagementForm.get('postingAttribute')?.touched">
+                                                <option selected disabled value="">{{ 'choose' | translate }}...
+                                                </option>
+                                                <option *ngFor="let attribute of postingAttributes"
+                                                    [value]="attribute.name">
+                                                    {{ attribute.name }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="loadManagementForm.get('postingAttribute')?.invalid && loadManagementForm.get('postingAttribute')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="company" class="form-label">{{ 'companyLabel' | translate
+                                                }}</label>
+                                            <div class="input-group">
+                                                <select class="form-select" id="company" formControlName="company" [class.is-invalid]="loadManagementForm.get('company')?.invalid && loadManagementForm.get('company')?.touched">
+                                                    <option selected disabled value="">{{ 'choose' | translate }}...
+                                                    </option>
+                                                    <option *ngFor="let company of companies"
+                                                        [value]="company.companyId">
+                                                        {{ company.companyName }}
+                                                    </option>
+                                                </select>
+                                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target=".company"><i
+                                                        class="dripicons-plus "></i> {{ 'companyLabel' | translate
+                                                    }}</button>
+                                                    <div *ngIf="loadManagementForm.get('company')?.invalid && loadManagementForm.get('company')?.touched"
+                                                    class="invalid-feedback">
+                                                    {{ 'fieldRequired' | translate }}
+                                                </div>
+                                                <div class="modal fade company" tabindex="-1"
+                                                    role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                        <div class="modal-content">
+                                                            <form [formGroup]="companyForm">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">{{ 'addCompanyTitle' |
+                                                                        translate }}</h4>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close" (click)="ClearCompanyForm()"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="mb-3">
+                                                                                <label for="companyName"
+                                                                                    class="form-label">{{
+                                                                                    'Name' | translate
+                                                                                    }}</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="companyName"
+                                                                                    formControlName="companyName" [class.is-invalid]="companyForm.get('companyName')?.invalid && companyForm.get('companyName')?.touched"/>
+                                                                                <div *ngIf="companyForm.get('companyName')?.invalid && companyForm.get('companyName')?.touched"
+                                                                                    class="invalid-feedback">
+                                                                                    {{ 'fieldRequired' |
+                                                                                    translate }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="mb-3">
+                                                                                <label for="companyAddress"
+                                                                                    class="form-label">{{
+                                                                                    'address' | translate
+                                                                                    }}</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="companyAddress" (input)="onAddressInput($event,'companyAddress')"
+                                                                                    formControlName="companyAddress" [class.is-invalid]="companyForm.get('companyAddress')?.invalid && companyForm.get('companyAddress')?.touched"/>
+                                                                                    <div class="dropdown" *ngIf="sharedFormService.activeDropdown === 'companyAddress' && sharedFormService.suggestions.length > 0">
+                                                                                        <ul class="dropdown-menu search-dropdown-menu show w-100">
+                                                                                          <li *ngFor="let suggestion of sharedFormService.suggestions" (click)="selectSuggestion(suggestion,companyForm,'companyAddress')" class="dropdown-item search-dropdown-item">
+                                                                                            {{ suggestion.displayName }}
+                                                                                          </li>
+                                                                                        </ul>
+                                                                                      </div>
+                                                                                    <div *ngIf="companyForm.get('companyAddress')?.invalid && companyForm.get('companyAddress')?.touched"
+                                                                                    class="invalid-feedback">
+                                                                                    {{ 'fieldRequired' |
+                                                                                    translate }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="mb-3">
+                                                                                <label for="companyProvince"
+                                                                                    class="form-label">{{
+                                                                                    'province' | translate
+                                                                                    }}</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="companyProvince"
+                                                                                    formControlName="companyProvince" [class.is-invalid]="companyForm.get('companyProvince')?.invalid && companyForm.get('companyProvince')?.touched" readonly/>
+                                                                                <div *ngIf="companyForm.get('companyProvince')?.invalid && companyForm.get('companyProvince')?.touched"
+                                                                                    class="invalid-feedback">
+                                                                                    {{ 'fieldRequired' |
+                                                                                    translate }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="mb-3">
+                                                                                <label for="companyCity"
+                                                                                    class="form-label">{{ 'city' |
+                                                                                    translate }}</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="companyCity"
+                                                                                    formControlName="companyCity" [class.is-invalid]="companyForm.get('companyCity')?.invalid && companyForm.get('companyCity')?.touched" readonly/>
+                                                                                <div *ngIf="companyForm.get('companyCity')?.invalid && companyForm.get('companyCity')?.touched"
+                                                                                    class="invalid-feedback">
+                                                                                    {{ 'fieldRequired' | translate
+                                                                                    }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="mb-3">
+                                                                                <label for="companyContactInfo"
+                                                                                    class="form-label">{{
+                                                                                    'phoneNumber' | translate
+                                                                                    }}</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="companyContactInfo"
+                                                                                    formControlName="companyContactInfo" 
+                                                                                    [class.is-invalid]="companyForm.get('companyContactInfo')?.invalid && companyForm.get('companyContactInfo')?.touched"/>
+                                                                                <div *ngIf="companyForm.get('companyContactInfo')?.invalid && companyForm.get('companyContactInfo')?.touched"
+                                                                                    class="invalid-feedback">
+                                                                                    {{ 'fieldRequired' |
+                                                                                    translate }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- <div class="form-check mb-3">
+                                                                        <input class="form-check-input text-muted"
+                                                                            type="checkbox" id="createMore" />
+                                                                        <label
+                                                                            class="form-check-label text-muted font-size-14"
+                                                                            for="createMore">
+                                                                            {{ 'createMore' | translate }}
+                                                                        </label>
+                                                                    </div> -->
+                                                                    <div class="modal-footer">
+                                                                        <button class="btn btn-light px-3" type="button"  (click)="ClearCompanyForm()"
+                                                                            data-bs-dismiss="modal">{{ 'cancel' |
+                                                                            translate }}</button>
+                                                                        <button class="btn btn-primary px-3" data-bs-dismiss="modal"
+                                                                            type="submit" (click)="onCompanySubmit()"
+                                                                            [disabled]="companyForm.invalid">{{
+                                                                            'submitButton' | translate }}</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="commodityDescription" class="form-label">{{
+                                                'commodityDescription' |
+                                                translate }}</label>
+                                            <input type="text" class="form-control" id="commodityDescription"
+                                                formControlName="commodityDescription" [class.is-invalid]="loadManagementForm.get('commodityDescription')?.invalid && loadManagementForm.get('commodityDescription')?.touched">
+                                            <div *ngIf="loadManagementForm.get('commodityDescription')?.invalid && loadManagementForm.get('commodityDescription')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="specialInstruction" class="form-label">{{
+                                                'specialInstruction' |
+                                                translate }}</label>
+                                            <textarea class="form-control" id="specialInstruction"
+                                                formControlName="specialInstruction" rows="4" [class.is-invalid]="loadManagementForm.get('specialInstruction')?.invalid && loadManagementForm.get('specialInstruction')?.touched"></textarea>
+                                            <div *ngIf="loadManagementForm.get('specialInstruction')?.invalid && loadManagementForm.get('specialInstruction')?.touched"
+                                                class="invalid-feedback">
+                                                {{ 'fieldRequired' | translate }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="termsAccepted" formControlName="termsAccepted" [class.is-invalid]="loadManagementForm.get('termsAccepted')?.invalid && loadManagementForm.get('termsAccepted')?.touched"
+                                           data-bs-toggle="modal" data-bs-target="#termsModal"  [checked]="loadManagementForm.get('acceptTerms')?.value"
+                                           [disabled]="!loadManagementForm.get('acceptTerms')?.value">
+                                    <label class="form-check-label" for="termsAccepted">
+                                      {{ 'termsAcceptedLabel' | translate }}
+                                    </label>
+                                    <div *ngIf="loadManagementForm.get('termsAccepted')?.invalid && loadManagementForm.get('termsAccepted')?.touched" class="invalid-feedback">
+                                      {{ 'fieldRequired' | translate }}
+                                    </div>
+                                  </div>
+                                  <div class="modal fade bs-example-modal-center" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5>{{ 'termsHeading' | translate }}</h5>
+                                            <p>{{ 'termsIntroduction' | translate }}</p>
+                                            
+                                            <h6>{{ 'termsSection1Title' | translate }}</h6>
+                                            <p>{{ 'termsSection1Content' | translate }}</p>
+                                          
+                                            <h6>{{ 'termsSection2Title' | translate }}</h6>
+                                            <p>{{ 'termsSection2Content' | translate }}</p>
+                                          
+                                            <h6>{{ 'termsSection3Title' | translate }}</h6>
+                                            <p>{{ 'termsSection3Content' | translate }}</p>
+                                            
+                                            <h6>{{ 'termsConclusionTitle' | translate }}</h6>
+                                            <p>{{ 'termsConclusionContent' | translate }}</p>
+                                            
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" id="acceptTerms" formControlName="acceptTerms">
+                                              <label class="form-check-label" for="acceptTerms">
+                                                {{ 'acceptTermsLabel' | translate }}
+                                              </label>
+                                            </div>
+                                          </div>                                          
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-Manual float-end" data-bs-dismiss="modal" [disabled]="!loadManagementForm.get('acceptTerms')?.value">{{ 'agree' | translate }}</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                <div>
+                                    <button class="btn btn-Manual float-end" type="submit" (click)="onSubmit()">{{
+                                        'submitButton' | translate }}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #import>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <div action="#" class="dropzone dz-clickable">
+                                        <input type="file" #fileInput (change)="onFileChange($event)"
+                                            accept=".xlsx, .xls" style="display: none;" />
+                                        <div class="dz-message needsclick">
+                                            <div class="mb-0">
+                                                <i class="display-4 text-muted bx bxs-cloud-upload"></i>
+                                            </div>
+                                            <h4 *ngIf="!fileName">{{ 'dropFilesOrClick' | translate }}</h4>
+                                            <p class="fs-6" *ngIf="fileName">{{ fileName }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right mt-4">
+                                    <div>
+                                        <button class="btn btn-Manual float-end" type="submit"
+                                            (click)="onImportSubmit()">{{ 'submitButton' | translate }}</button>
+                                    </div>
+                                    <button type="button" id="btn-hg-wd"
+                                        class="btn float-end btn-primary btn-rounded waves-effect waves-light"
+                                        (click)="triggerFileInput()">
+                                        <i class="dripicons-plus font-size-16 align-middle me-1"></i>{{ 'uploadButton' |
+                                        translate }}
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="tab-pane active" id="home" role="tabpanel">
+                                <div class="table-responsive">
+                                    <table class="table align-middle table-nowrap mb-0 border">
+                                        <thead class="text-black">
+                                            <tr>
+                                                <th class="align-middle">{{ 'loadId' | translate }}</th>
+                                                <th class="align-middle">{{ 'status' | translate }}</th>
+                                                <th class="align-middle">{{ 'originAddress' | translate }}</th>
+                                                <th class="align-middle">{{ 'destinationAddress' | translate }}</th>
+                                                <th class="align-middle">{{ 'cargoDescription' | translate }}</th>
+                                                <th class="align-middle">{{ 'weight' | translate }}</th>
+                                                <th class="align-middle">{{ 'puNumber' | translate }}</th>
+                                                <th class="align-middle">{{ 'action' | translate }}</th>
+                                            </tr>
+                                        </thead>
+                                           
+                                        <tbody>
+                                            <tr *ngFor="let load of loads">
+                                                <td><a>{{ load.shipmentId }}</a></td>
+                                                <td [ngStyle]="{
+                                                    'color': load.status === 1 ? 'green' : 
+                                                    load.status === 2 ? 'red' : 
+                                                    load.status === 3 ? 'blue' : 
+                                                    load.status === 9 ? '#c4a000' : 
+                                                            'black'
+                                                    }">                       
+                                                 {{ load.statusDescription }}
+                                                </td>
+                                                <td>{{ load.originAddress }}</td>
+                                                <td>{{ load.destinationAddress }}</td>
+                                                <td>{{ load.cargoDescription }}</td>
+                                                <td>{{ load.weight }}</td>
+                                                <td><a>{{ load.puNumber }}</a></td>
+                                                <td>
+                                                    
+                                                        <ul class="list-inline mb-0 font-size-16">
+                                                            <li class="list-inline-item">
+                                                                <a href="javascript:void(0);" class="text-success p-1">
+                                                                    <i class="bx bxs-edit-alt"
+                                                                        (click)="editLoad(load)"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <a href="javascript:void(0);" class="text-danger p-1">
+                                                                    <i class="bx bxs-trash"
+                                                                        (click)="deleteLoad(load)"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

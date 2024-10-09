@@ -1,0 +1,199 @@
+<div id="layout-wrapper" class="bg-blue-body-iner-pg" data-sidebar="dark" data-keep-enlarged="true"
+  class="vertical-collpsed">
+  <div class="inner-pg-sp">
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-12">
+              <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h3 class="text-muted">{{ 'assignLoads' | translate }}</h3>
+                <div class="d-flex align-items-center">
+                  <button class="btn btn-primary"  id="reloadButton" (click)="getShipmentByStatus()">
+                    <i class="mdi mdi-reload ms-auto"></i>
+                </button>
+                  <div class="btn-group me-3" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" id="btnradio4" [(ngModel)]="loadBoard" name="loadBoard" value="cards"
+                      autocomplete="off" (click)="onSelect('cards')">
+                    <label class="btn btn-outline-secondary" for="btnradio4">{{ 'cards' | translate }}</label>
+                
+                    <input type="radio" class="btn-check" id="btnradio5" [(ngModel)]="loadBoard" name="loadBoard" value="List"
+                      autocomplete="off" (click)="onSelect('List')">
+                    <label class="btn btn-outline-secondary" for="btnradio5">{{ 'list' | translate }}</label>
+                  </div>
+                  <div class="dropdown ms-auto me-3">
+                    <button type="button" class="btn btn-light border bg-white border-radius font-size-20"
+                  (click)="toggleLegendDropdown()">
+                  <i class="bx bx-info-circle"></i>
+                  <span class="d-none d-sm-inline-block font-size-20">{{ 'legends' | translate }}</span>
+                  <i class="mdi mdi-chevron-down ms-auto"></i>
+                </button>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-md custom-legend-dropdown"
+                    [ngClass]="{'show': isLegendDropdownOpen}">
+                    <ul class="list-unstyled mb-0 px-2 py-2">
+                      <li *ngFor="let legend of legendGroups" class="d-flex justify-content-between align-items-center legend-item">
+                        <span class="legend-code">{{ legend.code }}</span>
+                        <span class="legend-description">{{ legend.description }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                  </div>
+                  <div class="ms-auto">
+                    <div class="dropdown">
+                      <div class="dropdown-menu dropdown-menu-end dropdown-menu-md font-size-16"
+                        [ngClass]="{'dropdown-menu': true, 'show': isDropdownOpen}">
+                        <a class="dropdown-item" (click)="onDropdownItemClick('pickupDate')">
+                          <i class="bx bx-calendar"></i> {{ 'pickupDate' | translate }}
+                          <input class="form-check-input float-end" type="checkbox" >
+                        </a>
+                        <a class="dropdown-item" (click)="onDropdownItemClick('postedDate')">
+                          <i class="bx bx-calendar"></i> {{ 'postedDate' | translate }}
+                          <input class="form-check-input float-end" type="checkbox" >
+                        </a>
+                        <a class="dropdown-item" (click)="onDropdownItemClick('latestDate')">
+                          <i class="bx bx-calendar"></i> {{ 'latestDate' | translate }}
+                          <input class="form-check-input float-end" type="checkbox">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+          </div>
+      </div>
+      <div class="row" *ngIf="loadBoard === 'cards'">
+        <div class="col-xl-4 col-sm-6" *ngFor="let load of loads">
+          <div class="card" (click)="viewLoadDetails(load)"  [ngClass]="{'highlight-card': load.status === 1}">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="p-4 text-center text-xl-start">
+                  <div class="row">
+                    <div class="col-6">
+                      <div>
+                        <h3 class="text-muted mb-2 text-truncate fw-bold">
+                          <!-- {{load.shipmentName}}  -->
+                          <small class="text-muted">(#{{ load.shipmentId }})</small></h3>
+                        <h5>{{ (load.estimatedTime ) + 'h+' }}<span class="rounded-pill badge bg-success font-size-14 ms-2">{{load.statusDescription}}</span>
+                        </h5>                 
+                      </div>
+                    </div>
+                    <div class="col-6 text-end">
+                      <div>
+                        <h3 class="text-muted mb-2 text-truncate fw-bold">{{ load.estimatedCost }}</h3>
+                        <h5>$1.12/mi</h5>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ul class="verti-timeline list-unstyled mt-3 px-4">
+                    <li class="event-list loadBoardList">
+                      <div class="event-timeline-dot">
+                        <i class="bx bx-right-arrow-circle font-size-20 text-warning"></i>
+                      </div>
+                      <div class="d-flex">
+                        <div class="flex-shrink-0 me-5">
+                          <h5>{{ load.loadMonth }}</h5>
+                        </div>
+                        <div class="flex-grow-1">
+                          <h5>{{ load.originAddress }}</h5>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="loadBoardList">
+                      <h5 class="fs-1 fw-bold">{{ load.loadDateDay }}</h5>
+                    </li>
+                    <li class="event-list loadBoardList">
+                      <div class="event-timeline-dot">
+                        <i class="bx bx-right-arrow-circle font-size-20 text-warning"></i>
+                      </div>
+                      <div class="d-flex">
+                        <div class="flex-shrink-0 me-5">
+                          <h5>{{ load.loadDay }}</h5>
+                        </div>
+                        <div class="flex-grow-1">
+                          <h5>{{load.destinationAddress }}</h5>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="px-4 py-3 border-top">
+                  <ul class="list-inline mb-0">
+                    <li class="list-inline-item me-2">
+                      <span class="rounded-pill badge bg-warning font-size-14">{{load.loadSize}}</span>
+                    </li>
+                    <li class="list-inline-item me-2">
+                      <span class="rounded-pill badge-soft-secondary font-size-14">{{load.trailerType}}</span>
+                    </li>
+                    <li class="list-inline-item me-2">
+                      <span class="rounded-pill badge-soft-primary font-size-14">{{load.length}}</span>
+                    </li>
+                    <li class="list-inline-item me-2">
+                      <span class="rounded-pill badge bg-success font-size-14">{{load.weight}}</span>
+                    </li>
+                    <li class="list-inline-item me-2 font-size-18 float-end">
+                      {{load.estimatedMiles}}mi
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="loadBoard === 'List'">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table align-middle border border table-nowrap mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="align-middle">
+                      </th>
+                      <th class="align-middle">{{ 'shipmentId' | translate }}</th>
+                      <!-- <th class="align-middle">{{ 'shipmentName' | translate }}</th> -->
+                      <th class="align-middle">{{ 'estimatedTime' | translate }}</th>
+                      <th class="align-middle">{{ 'estimatedCost' | translate }}</th>
+                      <th class="align-middle">{{ 'status' | translate }}</th>
+                      <th class="align-middle">{{ 'originAddress' | translate }}</th>
+                      <th class="align-middle">{{ 'loadDates' | translate }}</th>
+                      <th class="align-middle">{{ 'destinationAddress' | translate }}</th>
+                      <th class="align-middle">{{ 'loadSize' | translate }}</th>
+                      <th class="align-middle">{{ 'trailerTypes' | translate }}</th>
+                      <th class="align-middle">{{ 'length' | translate }}</th>
+                      <th class="align-middle">{{ 'weight' | translate }}</th>
+                      <th class="align-middle">{{ 'estimatedMiles' | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let load of loads" 
+                    [ngClass]="{'highlight-row': load.status === 1}" (click)="viewLoadDetails(load)" >
+                    <td>
+                      <input type="checkbox" [(ngModel)]="load.isPinned" (click)="isPinned(load.shipmentId,$event);$event.stopPropagation()">
+                    </td>
+                      <td>{{load.shipmentId}}</td>
+                      <!-- <td>{{ load.shipmentName }}</td> -->
+                      <td>{{ load.estimatedTime }}</td>
+                      <td>{{ load.estimatedCost }}</td>
+                      <td>{{load.statusDescription}}</td>
+                      <td>{{ load.originAddress }}</td>
+                      <td>{{ load.loadDate }}</td>
+                      <td>{{ load.destinationAddress }}</td>
+                      <td>{{ load.loadSize }}</td>
+                      <td>{{ load.trailerType }}</td>
+                      <td><span class="rounded-pill badge-soft-primary font-size-14">{{ load.length }}</span></td>
+                      <td><span class="rounded-pill badge bg-secondary font-size-14">{{ load.weight }}</span></td>
+                      <td>{{ load.estimatedMiles }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

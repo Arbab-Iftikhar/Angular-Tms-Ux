@@ -1,0 +1,911 @@
+<div class="inner-pg-sp">
+  <div class="container-fluid" *ngIf="loadService.load">
+    <div class="row">
+      <div class="col-6">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+          <h3 class="text-muted">{{ 'load_details' | translate }}: {{loadService.load.shipmentId}}</h3>
+        </div>
+      </div>
+      <div class="col-6 mt-3">
+        <button class="btn btn-primary px-2 float-end" id="customButtonCss" (click)="refreshLoadStatus()">
+          <i class="mdi mdi-reload ms-auto"></i>
+      </button>
+        <button class="btn btn-primary px-2 float-end" id="customButtonCss" type="submit">{{loadService.load.statusDescription}}</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-5 d-flex flex-column">
+        <div class="card mb-0 flex-grow-1">
+          <div>
+            <div class="row">
+              <div class="col-12">
+                <div class="card-header alert alert-primary text-left col-12 p-3">
+                  <h5 class="mb-0"><i class="dripicons-location font-size-22 float-start"></i> {{ 'origin_location' |
+                    translate }}</h5>
+                </div>
+                <ul class="verti-timeline list-unstyled border-0">
+                  <li class="event-list" *ngFor="let item of originData">
+                    <div class="event-timeline-dot px-2">
+                      <i class=""></i>
+                    </div>
+                    <div class="d-flex">
+                      <div class="flex-grow-1 px-3">
+                        <div class="row">
+                          <div class="col-sm-4 edit-mob">
+                            <address>
+                              <strong class="font-size-16">{{ item.label }}</strong>
+                            </address>
+                          </div>
+                          <div class="col-sm-1 edit-mob">
+                            <i class="bx bx-right-arrow-alt font-size-22 text-primary"></i>
+                          </div>
+                          <div class="col-sm-7 edit-mob">
+                            <address class="mt-2 font-size-16 mt-sm-0">
+                              {{ item.value }}
+                            </address>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-3 flex-grow-1">
+          <div class="row">
+            <div class="col-12">
+              <div class="card-header alert alert-success text-left col-12 p-3">
+                <h5 class="mb-0">
+                  <i class="dripicons-location font-size-22 float-start"></i> {{ 'destination_location' | translate }}
+                </h5>
+              </div>
+              <ul class="verti-timeline list-unstyled border-0">
+                <li class="event-list" *ngFor="let item of destinationData">
+                  <div class="event-timeline-dot px-2">
+                    <i class=""></i>
+                  </div>
+                  <div class="d-flex">
+                    <div class="flex-grow-1 px-3">
+                      <div class="row">
+                        <div class="col-sm-4 edit-mob">
+                          <address>
+                            <strong class="font-size-16">{{ item.label }}</strong>
+                          </address>
+                        </div>
+                        <div class="col-sm-1 edit-mob">
+                          <i class="bx bx-right-arrow-alt font-size-22 text-primary"></i>
+                        </div>
+                        <div class="col-sm-7 edit-mob">
+                          <address class="mt-2 font-size-16 mt-sm-0">
+                            {{ item.value }}
+                          </address>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-5 d-flex flex-column">
+        <div class="card mb-0 flex-grow-1">
+          <div>
+            <div class="row">
+              <div class="col-12">
+                <div class="card-header alert alert-secondary text-left col-12 p-3">
+                  <h5 class="mb-0"><i class="fas fa-truck-loading font-size-18 float-start me-1"></i> {{ 'loads' |
+                    translate }}</h5>
+                </div>
+                <ul class="verti-timeline list-unstyled border-0">
+                  <li class="event-list" *ngFor="let item of loadData">
+                    <div class="event-timeline-dot px-2">
+                      <i class=""></i>
+                    </div>
+                    <div class="d-flex">
+                      <div class="flex-grow-1 px-3">
+                        <div class="row">
+                          <div class="col-sm-4 edit-mob">
+                            <address>
+                              <strong class="font-size-16">{{ item.label }}</strong>
+                            </address>
+                          </div>
+                          <div class="col-sm-1 edit-mob">
+                            <i class="bx bx-right-arrow-alt font-size-22 text-primary"></i>
+                          </div>
+                          <div class="col-sm-7 edit-mob">
+                            <address class="mt-2 font-size-16 mt-sm-0">
+                              {{ item.value }}
+                            </address>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-3 flex-grow-1">
+          <div class="row">
+            <div class="col-12">
+              <div class="card-header alert alert-success text-left col-12 p-3">
+                <h5 class="mb-0">
+                  <i class="dripicons-pencil font-size-18 float-start me-1"></i> {{ 'special_instructions' | translate
+                  }}
+                </h5>
+              </div>
+              <div class="card-body px-4 py-3">
+                <ul class="list-unstyled">
+                  <span class="pl-2">{{ instruction }}</span>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-2 d-flex flex-column">
+        <div class="card card-equal flex-grow-1">
+          <div class="row">
+            <div class="col-12">
+              <div class="card-header alert alert-secondary text-left col-12 p-3">
+                <h5 class="mb-0">
+                  <i class="mdi mdi-calendar-clock font-size-20 float-start me-1"></i> Loads Status
+                </h5>
+              </div>
+              <div class="card-body text-center"> 
+                <span class="logo-lg">
+                  <img src="assets/images/sm-logo.png" alt="Logo" height="120" />
+                </span>
+                <div class="mt-3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-xl-12">
+      <ul class="nav nav-pills nav-justified bg-white rounded-pill mb-4" role="tablist">
+        <li class="nav-item waves-effect waves-light font-size-14 d-flex align-items-center">
+          <a class="nav-link rounded-pill" [ngClass]="{ active: selectedTab === 'assignments' }"
+            (click)="selectTab('assignments')">
+            <span class="me-2"><i class="bx bx-file-blank font-size-18"></i></span>
+            <span>{{ 'assignments' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item waves-effect waves-light">
+          <a class="nav-link rounded-pill font-size-14 d-flex align-items-center"
+            [ngClass]="{ active: selectedTab === 'verification' }" (click)="selectTab('verification')">
+            <span class="me-2"><i class="mdi mdi-sticker-check-outline font-size-18"></i></span>
+            <span>{{ 'verification' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item waves-effect waves-light">
+          <a class="nav-link rounded-pill font-size-14 d-flex align-items-center"
+            [ngClass]="{ active: selectedTab === 'tracking' }" (click)="selectTab('tracking')">
+            <span class="me-2"><i class="dripicons-location font-size-18"></i></span>
+            <span>{{ 'tracking' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item waves-effect waves-light">
+          <a class="nav-link rounded-pill font-size-14 d-flex align-items-center"
+            [ngClass]="{ active: selectedTab === 'status' }" (click)="selectTab('status')">
+            <span class="me-2"><i class="fas fa-cog"></i></span>
+            <span>{{ 'status' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item waves-effect waves-light">
+          <a class="nav-link rounded-pill font-size-14 d-flex align-items-center"
+            [ngClass]="{ active: selectedTab === 'comments' }" (click)="selectTab('comments')">
+            <span class="me-2"><i class="fas fa-comments-dollar font-size-18"></i></span>
+            <span>{{ 'comments' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item waves-effect waves-light">
+          <a class="nav-link rounded-pill font-size-14 d-flex align-items-center"
+            [ngClass]="{ active: selectedTab === 'documents' }" (click)="selectTab('documents')">
+            <span class="me-2"><i class="bx bx-file-blank font-size-18"></i></span>
+            <span>{{ 'documents' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item waves-effect waves-light">
+          <a class="nav-link rounded-pill font-size-14 d-flex align-items-center"
+            [ngClass]="{ active: selectedTab === 'routeHistory' }" (click)="selectTab('routeHistory')">
+            <span class="me-2"><i class="bx bx-history font-size-18"></i></span>
+            <span>{{ 'routeHistory' | translate }}</span>
+          </a>
+        </li>
+      </ul>
+
+
+      <div class="card">
+        <div class="card-body">
+          <div class="tab-content text-muted">
+            <div class="tab-pane active" *ngIf="selectedTab === 'assignments'" role="tabpanel">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="mb-3 align-items-center justify-content-between">
+                    <h3 class="mb-sm-0">{{ 'Assignments' | translate }}</h3>
+                  </div>
+                  <hr class="mt-0 px-0">
+
+                  <form [formGroup]="assignmentForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!-- <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show"
+                          role="alert">
+                          {{ 'SuccessMessage' | translate }}
+                          <button type="button" class="btn-close" (click)="dismissAlert()" aria-label="Close"></button>
+                        </div> -->
+
+                        <div class="mb-3">
+                          <label *ngIf="loadService.load?.driverId == null" for="driverSelection" class="form-label">{{ 'SelectDriver' | translate }}</label>
+                          <select *ngIf="loadService.load?.driverId == null" (change)="onDriverSelect($event)" formControlName="driver" id="driverSelection"
+                            class="form-select" required>
+                            <option value="" disabled>{{ 'SelectDriver' | translate }}</option>
+                            <option *ngFor="let driver of drivers" [value]="driver.driverId">
+                              {{ driver.driverName }}
+                            </option>
+                          </select>
+                          <button class="btn btn-primary" style="margin: 1%;" data-bs-toggle="modal" data-bs-target=".driver"
+                          [disabled]="loadService.load?.driverId != null"><i
+                              class="dripicons-plus "></i>
+                            {{ 'add_driver' | translate
+                            }}</button>
+                          <div class="modal fade driver" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                              <div class="modal-content">
+                                <form [formGroup]="driverForm">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">{{ 'addNewDriver' |
+                                      translate }}</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                      (click)="resetForm()"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                          <label for="driverName" class="form-label">{{
+                                            'Name' | translate
+                                            }}</label>
+                                          <input type="text" class="form-control" id="driverName"
+                                            formControlName="driverName"
+                                            [class.is-invalid]="driverForm.get('driverName')?.invalid && driverForm.get('driverName')?.touched" />
+                                          <div
+                                            *ngIf="driverForm.get('driverName')?.invalid && driverForm.get('driverName')?.touched"
+                                            class="invalid-feedback">
+                                            {{ 'nameRequired' |
+                                            translate }}
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                          <label for="driverContactNumber" class="form-label">{{
+                                            'driverContactNo' | translate
+                                            }}</label>
+                                          <div class="input-group">
+                                            <!-- Country Code Dropdown -->
+                                            <select class="form-select" id="countryCode" formControlName="countryCode"
+                                            formControlName="countryCode">
+                                            <option *ngFor="let code of countryCodes" [value]="code.id">
+                                              {{ code.name }}
+                                          </option>
+                                            </select>
+                                          <input type="text" class="form-control" id="driverContactNumber"
+                                            formControlName="driverContactNumber"
+                                            [class.is-invalid]="driverForm.get('driverContactNumber')?.invalid && driverForm.get('driverContactNumber')?.touched" />
+                                          </div>
+                                            <div
+                                            *ngIf="driverForm.get('driverContactNumber')?.invalid && driverForm.get('driverContactNumber')?.touched"
+                                            class="invalid-feedback">
+                                            {{ 'phoneNumberRequired' |
+                                            translate }}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                          <label for="driverEmail" class="form-label">{{
+                                            'email' | translate
+                                            }}</label>
+                                          <input type="text" class="form-control" id="driverEmail"
+                                            formControlName="driverEmail"
+                                            [class.is-invalid]="driverForm.get('driverEmail')?.touched && driverForm.get('driverEmail')?.invalid" />
+                                          <div
+                                            *ngIf="driverForm.get('driverEmail')?.invalid && driverForm.get('driverEmail')?.touched"
+                                            class="invalid-feedback">
+                                            {{ 'emailInvalid' |
+                                            translate }}
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                          <label for="driverUsername" class="form-label">{{ 'Username' |
+                                            translate }}</label>
+                                          <input type="text" class="form-control" id="driverUsername"
+                                            formControlName="driverUsername"
+                                            [class.is-invalid]="driverForm.get('driverUsername')?.touched && driverForm.get('driverUsername')?.invalid">
+                                          <div *ngIf="driverForm.get('driverUsername')?.errors?.['required']"
+                                            class="invalid-feedback">
+                                            {{ 'usernameRequired' | translate }}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                          <label for="driverLicenseNumber" class="form-label">{{
+                                            'driverLicenseNumber' | translate
+                                            }}</label>
+                                          <input type="text" class="form-control" id="driverLicenseNumber"
+                                            formControlName="driverLicenseNumber"
+                                            [class.is-invalid]="driverForm.get('driverLicenseNumber')?.invalid && driverForm.get('driverLicenseNumber')?.touched" />
+                                          <div
+                                            *ngIf="driverForm.get('driverLicenseNumber')?.invalid && driverForm.get('driverLicenseNumber')?.touched"
+                                            class="invalid-feedback">
+                                            {{ 'LicenseNumberRequired' |
+                                            translate }}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                      <button class="btn btn-light px-3" type="button" data-bs-dismiss="modal"
+                                        (click)="resetForm()">{{
+                                        'cancel' |
+                                        translate }}</button>
+                                      <button class="btn btn-primary px-3" data-bs-dismiss="modal" type="submit"
+                                        (click)="onDriverSubmit()" [disabled]="driverForm.invalid">{{
+                                        'submitButton' | translate }}</button>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- Button to Open Modal -->
+                          <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#attachmentModal"  [disabled]="loadService.load?.driverId != null">
+                            + Attachment
+                          </button>
+                          <!-- Modal Structure -->
+                          <div class="modal fade" id="attachmentModal" tabindex="-1"
+                            aria-labelledby="attachmentModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="attachmentModalLabel">Shipment Document</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close" (click)="resetShipmentDoc()"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <!-- Add form and inputs similar to your existing modal -->
+                                  <form [formGroup]="shipmentDocForm">
+                                    <div class="mb-3">
+                                      <label for="documentType" class="form-label">Select Document Type</label>
+                                      <select class="form-select" id="documentType" formControlName="documentType"
+                                      [(ngModel)]="selectedDocument">
+                                        <option value="DO">D/O - Delivery Order</option>
+                                        <option value="BOL">BOL - Bill of Lading</option>
+                                      </select>
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="documentFile" class="form-label">Upload File</label>
+                                      <input type="file" class="form-control" id="documentFile" (change)="onFileSelected($event)">
+                                    </div>
+                                  </form>                                 
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetShipmentDoc()">Close</button>
+                                  <button class="btn btn-primary px-3" data-bs-dismiss="modal" type="submit"
+                                  (click)="onShipmentDocSubmit()">{{
+                                  'submitButton' | translate }}</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <button type="button" style="margin: 1%;" class="btn btn-primary" data-bs-toggle="modal"
+                          data-bs-target="#viewAttachmentModal" (click)="getAttachDocuments()">
+                          View Attachment
+                        </button>
+
+                        <div class="modal fade" id="viewAttachmentModal" tabindex="-1"
+                            aria-labelledby="attachmentModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close" (click)="resetShipmentDoc()"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <h5 class="text-center mb-4">{{ 'shipment_documents' | translate }}</h5>
+                                  <div class="row">
+                                    <div class="col-sm-12">
+                                      <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                          <thead class="text-black">
+                                            <tr>
+                                              <th>{{ 'document_type' | translate }}</th>
+                                              <th>{{ 'document_name' | translate }}</th>
+                                              <th>{{ 'actions' | translate }}</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr *ngIf="verifiedDocuments.length === 0">
+                                              <td colspan="3" class="text-center">No data available</td>
+                                            </tr>
+                                            <tr *ngFor="let document of verifiedDocuments">
+                                              <td>{{ document.type }}</td>
+                                              <td>{{ document.name }}</td>
+                                              <td>
+                                                <span class="icons">
+                                                  <i [class]="document.previewIcon + ' icon-custom'" 
+                                                     (click)="previewPDF(document.fileData)" 
+                                                     title="Preview PDF"></i>
+                                                  <i class="bx bx-download h3 m-0 icon-spacing" 
+                                                     (click)="downloadfile(document.fileData)" 
+                                                     title="Download File"></i>
+                                                </span>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <button class="btn btn-success px-4 float-end rounded-pill" type="button" (click)="setDriverId()"
+                      [disabled]="loadService.load?.driverId != null">{{ 'SendLink' |
+                        translate }}</button>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Driver Details Column -->
+                <div class="col-lg-7 offset-lg-1">
+                  <div class="mb-3 d-sm-flex align-items-center justify-content-between">
+                    <h3 class="mb-sm-0">{{ 'DriverDetails' | translate }}</h3>
+                  </div>
+                  <hr class="mt-0 px-0">
+
+                  <div class="row">
+                    <!-- Driver Name -->
+                    <div class="col-xl-4 mt-3 col-md-6">
+                      <div class="d-flex">
+                        <div class="flex-grow-1">
+                          <h4>{{ 'DriverName' | translate }}</h4>
+                          <p class="text-muted font-size-15">{{ selectedDriver?.driverName || 'N/A' }}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Mobile Number -->
+                    <div class="col-xl-4 mt-3 col-md-6">
+                      <div class="d-flex">
+                        <div class="flex-grow-1">
+                          <h4>{{ 'MobileNumber' | translate }}</h4>
+                          <p class="text-muted font-size-15">{{ selectedDriver?.driverContactNumber || 'N/A' }}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- License -->
+                    <div class="col-xl-4 mt-3 col-md-6">
+                      <div class="d-flex">
+                        <div class="flex-grow-1">
+                          <h4>{{ 'License' | translate }}</h4>
+                          <p class="text-muted font-size-15">{{ selectedDriver?.driverLicenseNumber || 'N/A' }}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Documents Status -->
+                    <div class="col-xl-4 mt-3 col-md-6">
+                      <div class="d-flex">
+                        <div class="flex-grow-1">
+                          <h4>{{ 'DocumentsStatus' | translate }}</h4>
+                          <span class="badge badge-pill font-size-16"
+                            [ngClass]="selectedDriver?.isVerified ? 'badge-soft-success' : 'badge-soft-warning'">
+                            {{ selectedDriver?.isVerified ? 'Verified' : 'Pending' }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <!-- Ratings -->
+                    <div class="col-xl-4 mt-3 col-md-6">
+                      <div class="d-flex">
+                        <div class="flex-grow-1">
+                          <h4>{{ 'Ratings' | translate }}</h4>
+                          <div class="rating-star">
+                            <ng-container *ngFor="let star of stars">
+                              <i class="mdi mdi-star"
+                                [ngClass]="{ 'text-primary': star.active, 'mdi-star-outline': !star.active }"></i>
+                            </ng-container>
+                            <span class="badge bg-info"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Load Status -->
+                    <!-- <div class="col-xl-4 mt-3 col-md-6">
+                      <div class="d-flex">
+                        <div class="flex-grow-1">
+                          <h4>{{ 'LoadStatus' | translate }}</h4>
+                          <span class="badge badge-pill badge-soft-warning font-size-16"></span>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane active" *ngIf="selectedTab === 'verification'" role="tabpanel" >
+              <div class="row">
+                <div class="col-sm-4" *ngFor="let type of ['frontImange']">
+                  <div class="card p-1 border shadow-none">
+                    <div class="position-relative">
+                      <img [src]="images[type] ? 'data:image/jpeg;base64,' + images[type] : 'assets/images/image-placeholder.png'" alt="" class="img-thumbnail fixed-height">
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <h5 class="pt-4 p-1">
+                          <a class="text-dark">{{ type | translate }}</a>
+                        </h5>
+                      </div>
+                      <div class="col-sm-6" *ngIf="images[type]">
+                        <i class="dripicons-preview" (click)="previewImage(images[type])"></i>
+                        <i class="dripicons-download"(click)="downloadFileByType(type)"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4"  *ngFor="let type of ['CabCard']">
+                  <div class="card p-1 border shadow-none">
+                    <div class="position-relative img-thumbnail fixed-height">
+                      <img [src]="images[type] ? 'assets/images/card_card.png' : 'assets/images/image-placeholder.png'" alt="PDF as Image" class="img-thumbnail fixed-height">
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <h5 class="pt-4 p-1">
+                          <a class="text-dark">{{ 'CabCard' | translate }}</a>
+                        </h5>
+                      </div>
+                      <div class="col-sm-6" *ngIf="images[type]">
+                        <i class="dripicons-preview" (click)="previewPdf(images[type])"></i>
+                        <i class="dripicons-download"(click)="downloadFileByType(type)"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-check">
+                    <input class="form-check-input font-size-16" type="checkbox" id="invalidCheck">
+                    <label class="form-check-label font-size-16" for="invalidCheck">
+                      {{ 'Verified' | translate }}
+                    </label>
+                  </div>
+                </div>
+
+                <h3 class="pt-3 mb-3">{{ 'AllotPickupNumber' | translate }}</h3>
+
+                <div class="col-sm-4">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <h3 class="pt-2 text-success">{{loadService.load.puNumber}}</h3>
+                    </div>
+                    <div class="col-sm-6">
+                      <button class="btn btn-success px-4 pt-2 float-end rounded-pill" type="submit" (click)="allotPickupNumber()">{{ 'Assign' |
+                        translate }}</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="tab-pane active" *ngIf="selectedTab === 'tracking'" role="tabpanel">
+              <div class="d-flex flex-wrap gap-2 float-end mb-4">
+                <div class="d-flex align-items-center">
+                  <div class="form-check me-3">
+                    <input class="form-check-input font-size-16" type="checkbox" id="realTimeTrackingCheck"
+                      (change)="enableRealTimeTracking($event)"
+                      [(ngModel)]="realTimeTracking.isRealTimeTrackingEnabled" [disabled]="loadService.load.status>=8 || loadService.load.status<3">
+                    <label class="form-check-label font-size-16" for="realTimeTrackingCheck">
+                      {{ 'RealTimeTracking' | translate }}
+                    </label>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-md me-2" (click)="currentLocation()"  [disabled]="loadService.load.status>=8 || loadService.load.status<3">
+                    {{ 'CurrentLocation' | translate }}
+                  </button>
+                  <button type="button" class="btn btn-primary btn-md" (click)="getFullRoute()" [disabled]="loadService.load.status<8">
+                    {{ 'FullRoute' | translate }}
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="selectedTab === 'tracking'" id="map" style="height: 500px; z-index: 1; width:100%"
+                [ngStyle]="{ opacity: realTimeTracking.mapOpacity }">
+              </div>
+            </div>
+            <div class="tab-pane active" *ngIf="selectedTab === 'status'" role="tabpanel">
+              <div class="hori-timeline">
+                <div class="owl-stage">
+                  <div class="owl-carousel owl-theme mt-2 navs-carousel events" id="timeline-carousel">
+                    <div class="item event-list" *ngFor="let status of statuses; let i = index">
+                      <div class="owl-item active p-1">
+                        <div class="event-content text-center">
+                          <div style="margin-right:2rem">
+                            <div class="col-12">
+                              <div class="event-date mb-2">
+                                <h2 class="text-primary mb-1">{{ status.statusCode }}</h2>
+                                <h5 class="mb-2  text-container">{{ status.statusDescription }}</h5>
+                              </div>
+                            </div>
+                            <div class="col-12 mb-2">
+                              <div class="event-down-icon text-center">
+                                <i *ngIf="i <= currentStatusIndex"
+                                  class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
+                                <i *ngIf="i > currentStatusIndex"
+                                  class="bx bx-down-arrow-circle h1 text-success down-arrow-icon"></i>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="mt-2 px-2">
+                                <p class="text-muted mb-0 text-center">
+                                  {{ status.statusDetails }}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane active" *ngIf="selectedTab === 'comments'" role="tabpanel">
+              <div class="w-100 user-chat">
+                <div class="card">
+                  <div class="bg-lite">
+                    <h5 class="font-size-14 mb-3">{{ 'Recent' | translate }}</h5>
+                    <ul class="list-unstyled chat-list" data-simplebar style="max-height: 410px;">
+                      <li *ngFor="let comment of commentList">
+                        <a href="javascript: void(0);">
+                          <div class="d-flex">
+                            <div class="flex-grow-1 overflow-hidden">
+                              <p class="text-truncate mb-0">{{ comment.commentDescription }}</p>
+                            </div>
+                            <div class="font-size-11">
+                              <div class="fw-bold fs-6">{{ comment.commentDate }}</div>
+                              <div class="text-muted text-center">{{ comment.commentTime }}</div>
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <form [formGroup]="comments">
+                      <div class="p-3 chat-input-section">
+                        <div class="row">
+                          <div class="col">
+                            <div class="position-relative">
+                              <input type="text" class="form-control chat-input"
+                                placeholder="{{ 'EnterMessage' | translate }}" formControlName="commentDescription">
+                            </div>
+                          </div>
+                          <div class="col-auto">
+                            <button type="submit"
+                              class="btn btn-success btn-rounded chat-send w-md waves-effect waves-light">
+                              <span class="d-none d-sm-inline-block me-2" (click)="onSubmitComments()">{{ 'Submit' |
+                                translate }}</span>
+                              <i class="mdi mdi-send"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="tab-pane active" *ngIf="selectedTab === 'documents'" role="tabpanel">
+              <div class="row">
+                <!-- Document Upload Form -->
+                <div class="col-sm-4">
+                  <form [formGroup]="DocumentsForm" (ngSubmit)="uploadProofDocuments()" class="needs-validation" novalidate>
+                    <div class="row">
+                      <h4 class="mb-sm-4">{{ 'AddDocumentDetails' | translate }}</h4>
+                
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <select class="form-select" id="validationCustom03" formControlName="proofDocumnetType" (change)="onProofOptionChange($event)" required>
+                            <option  value=""  disabled selected >{{ 'Choose' | translate }}</option>
+                            <option *ngFor="let option of proofOptions" [value]="option.key">
+                              {{ option.value | translate }}
+                            </option>
+                          </select>
+                          <div class="valid-feedback">
+                            {{ 'LooksGood' | translate }}
+                          </div>
+                        </div>
+                      </div>
+                
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <input type="file" class="form-control" id="documentFileNoForm" (change)="FileUpload($event)">
+                        </div>
+                      </div>
+                    </div>
+                
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="mb-3">
+                          <textarea required placeholder="{{ 'EnterDescription' | translate }}" class="form-control" formControlName="description" rows="5"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                
+                    <div>
+                      <button class="btn btn-primary float-end rounded-pill px-4" type="submit">{{ 'Submit' | translate }}</button>
+                    </div>
+                  </form>
+                </div>
+                
+
+                <!-- View Document Section -->
+                <div class="col-sm-4">
+                  <h4 class="mb-sm-4">{{ 'ViewDocument' | translate }}</h4>
+                  <div class="card p-1 border shadow-none">
+                    <div class="position-relative">
+                      <img id="documentImage" src="" alt="No Image to Preview" class="img-thumbnail">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Uploaded Documents Section -->
+                <div class="col-sm-4">
+                  <h4 class="mb-sm-4">{{ 'UploadedDocuments' | translate }}</h4>
+                  <div class="table-container">
+                    <div class="table-responsive">
+                      <table class="table table-nowrap align-middle table-hover mb-0">
+                        <tbody>
+                          <tr *ngFor="let document of uploadedDocuments">
+                            <td style="width: 45px;">
+                              <div class="avatar-sm">
+                                <span class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-24">
+                                  <i class="bx bxs-file-doc"></i>
+                                </span>
+                              </div>
+                            </td>
+                            <td>
+                              <h5 class="font-size-14 mb-1">
+                                <a href="javascript: void(0);" class="text-dark">{{ document.name }}</a>
+                              </h5>
+                              <small>{{ 'Date/Time' | translate }} : {{ document.uploadDate }}</small>
+                            </td>
+                            <td>
+                              <div class="text-center">
+                                <i [class]="document.previewIcon + ' icon-custom'" (click)="onIconClick(document.id)"></i>
+                                <i class="mdi mdi-delete-alert font-size-22 p-1 text-danger"></i>
+                                <a [href]="document.downloadLink" class="text-dark" >
+                                  <i class="bx bx-download h3 m-0"></i>
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="tab-pane active" *ngIf="selectedTab === 'routeHistory'" role="tabpanel">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h3 class="mb-sm-0">{{ 'RouteHistory' | translate }}</h3>
+                  </div>
+                  <hr class="mt-0 mb-4">
+
+                  <div class="tab-pane active" id="home" role="tabpanel">
+                    <div class="table-responsive">
+                      <table class="table align-middle table-nowrap mb-0 border">
+                        <thead class="table-light">
+                          <tr>
+                            <th class="align-middle">{{ 'serialNumber' | translate }}</th>
+                            <th class="align-middle">{{ 'longitude' | translate }}</th>
+                            <th class="align-middle">{{ 'latitude' | translate }}</th>
+                            <th class="align-middle">{{ 'dateTime' | translate }}</th>                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let row of displayedItems; let i = index">
+                            <td>{{ (pagination.currentPage - 1) * itemsPerPage + i + 1 }}</td>
+                            <td>{{ row.longitude }}</td>
+                            <td>{{ row.latitude }}</td>
+                            <td>{{ row.date }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="row px-3 pt-4">
+                      <div>
+                        <div class="dataTables_paginate paging_simple_numbers">
+                          <ul class="pagination float-end">
+                            <li class="paginate_button page-item"
+                              [ngClass]="{ 'disabled': pagination.currentPage === 1 }">
+                              <a (click)="previousPage()" aria-controls="datatable" class="page-link">{{ 'Previous' |
+                                translate }}</a>
+                            </li>
+                            <li class="paginate_button page-item">
+                              <p class="page-link">{{ pagination.currentPage }}</p>
+                            </li>
+                            <li class="paginate_button page-item">
+                              <p class="page-link">{{ pagination.totalPages }}</p>
+                            </li>
+                            <li class="paginate_button page-item"
+                              [ngClass]="{ 'disabled': pagination.currentPage === pagination.totalPages }">
+                              <a (click)="nextPage()" aria-controls="datatable" class="page-link">{{ 'Next' | translate
+                                }}</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h3 class="mb-sm-0">{{'plotRouteHistory' | translate}}</h3>
+                  </div>
+                  <div *ngIf="selectedTab === 'routeHistory'" id="map" style="height: 500px; z-index: 1; width:100%">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

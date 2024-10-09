@@ -1,0 +1,245 @@
+<div class="account-pages" id="bg-blue">
+    <div class="inner-pg-sp">
+        <div class="container-fluid">
+            <div class="col-xl-10 mx-auto">
+    
+                  <!-- Nav tabs -->
+                  <ul class="nav nav-tabs col-md-10 mx-auto" role="tablist">
+                    <li class="nav-item col-md-4 border border-white bg-success">
+                      <a class="nav-link" [ngClass]="{'active': activeTab === 'home'}" (click)="setActiveTab('home')" role="tab">
+                        <span class="d-none d-sm-none"><i class="fas fa-home"></i></span>
+                        <span class="d-block d-sm-block text-center p-1 border-radius text-black font-size-18">BROKERS</span>
+                      </a>
+                    </li>
+                    <li class="nav-item col-md-4 border border-white bg-success">
+                      <a class="nav-link" [ngClass]="{'active': activeTab === 'profile'}"  (click)="setActiveTab('profile')" role="tab">
+                        <span class="d-none d-sm-none"><i class="far fa-user"></i></span>
+                        <span class="d-block d-sm-block text-center p-1 border-radius text-black font-size-18">SHIPPER</span>
+                      </a>
+                    </li>
+                    <li class="nav-item col-md-4 border border-white bg-success">
+                      <a class="nav-link" [ngClass]="{'active': activeTab === 'messages'}" (click)="setActiveTab('messages')" role="tab">
+                        <span class="d-none d-sm-none"><i class="far fa-envelope"></i></span>
+                        <span class="d-block d-sm-block text-center p-1 border-radius text-black font-size-18">COMBO</span>
+                      </a>
+                    </li>
+                  </ul>
+                  
+                  <!-- Dynamic Content Based on Active Tab -->
+                  <div class="tab-content p-3 text-muted card bg-light-gray">
+                    <div class="tab-pane" [ngClass]="{'active': activeTab === 'home'}" id="home" role="tabpanel">
+                      <div class="row">
+                        <div class="col-md-12 mx-auto">
+                          <div class="row">
+                            <div class="col-md-4" *ngFor="let plan of plans">
+                              <div class="d-flex mt-4 mb-4">
+                                <div class="flex-grow-1 px-3 mt-2">
+                                  <h4 class="mb-0 text-center">{{ plan.title }}</h4>
+                                  <h4 class="mt-1 text-black text-center">{{ plan.subtitle }}</h4>
+                                </div>
+                              </div>
+                              <div class="d-flex mt-3">
+                                <div class="flex-grow-1 px-3 mt-2">
+                                  <h1 class="mb-0 text-black text-center">{{ plan.price }}{{plan.currency}}</h1>
+                                </div>
+                              </div>
+                              <div class="d-flex">
+                                <div class="flex-grow-1">
+                                  <h4 class="text-black text-center"> {{ plan.duration }}</h4>
+                                </div>
+                              </div>
+                              <div class="d-flex mt-4 mb-4">
+                                <div class="flex-grow-1 px-3 mt-2">
+                                  <h4 class="mb-0 text-center">
+                                    <button type="button" class="btn rounded-pill px-4 p-2 btn-dark" (click)="buyNow(plan)">
+                                      Buy now
+                                    </button>
+                                  </h4>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row m-0 p-0 mb-0">
+                                <div class="col-lg-12 m-0 p-0 mb-0">
+                                  <div class="card m-0 mt-4 p-0 mb-0">
+                                    <div class="table-responsive">
+                                      <table class="table table-bordered table-striped mb-0 border">
+                                        <thead class="text-center">
+                                          <tr>
+                                            <th><span>Broker Load Board Plans:</span></th>
+                                            <th>TMS Plan 1</th>
+                                            <th>TMS Plan 2</th>
+                                            <th>TMS Plan 3</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                          <tr>
+                                            <th scope="row">Unlimited Search & Post</th>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Priority Booking</th>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                          </tr>
+                                      
+                                          <tr>
+                                            <th scope="row">TMS Directory</th>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Canadian Trucks</th>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Multiple Searches and Filtering</th>
+                                            <td></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                          </tr>
+                                        
+                                        
+                                          <tr>
+                                            <th scope="row">TMS & FTP Integration</th>
+                                            <td></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">TMS CarrierWatch</th>
+                                            <td></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">CarrierWatch Insurance Certificates</th>
+                                            <td></td>
+                                            <td></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">LaneMakers</th>
+                                            <td></td>
+                                            <td></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Preferred & Blocked Companies</th>
+                                            <td></td>
+                                            <td></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Group Postings</th>
+                                            <td></td>
+                                            <td></td>
+                                            <td><i class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                          </tr>
+                                        
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                    <div class="tab-pane" [ngClass]="{'active': activeTab === 'profile'}" id="profile" role="tabpanel">
+                        <div class="row mx-auto text-center">
+                            <div class="col-md-6" *ngFor="let plan of selectedPlans">
+                              <div class="d-flex mt-4 mb-4">
+                                <div class="flex-grow-1 px-3 mt-2">
+                                  <h4 class="mb-0 text-center">{{ plan.title }}</h4>
+                                  <h4 class="mt-1 text-black text-center">{{ plan.subtitle }}</h4>
+                                </div>
+                              </div>
+                              <div class="d-flex mt-3">
+                                <div class="flex-grow-1 px-3 mt-2">
+                                  <h1 class="mb-0 text-black text-center">{{ plan.price }}{{plan.currency}}</h1>
+                                </div>
+                              </div>
+                              <div class="d-flex">
+                                <div class="flex-grow-1">
+                                  <h4 class="text-black text-center"> /{{ plan.duration }}</h4>
+                                </div>
+                              </div>
+                              <div class="d-flex mt-4 mb-4">
+                                <div class="flex-grow-1 px-3 mt-2">
+                                  <h4 class="mb-0 text-center">
+                                    <button type="button" class="btn rounded-pill px-4 p-2 btn-dark" (click)="buyNow(plan)">Buy now</button>
+                                  </h4>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row m-0 p-0 mb-0">
+                            <div class="col-lg-12 m-0 p-0 mb-0">
+                              <div class="card m-0 mt-4 p-0 mb-0">
+                                <div class="table-responsive">
+                                  <table class="table table-bordered table-striped mb-0 border">
+                                    <thead class="text-center">
+                                      <tr>
+                                        <th><span>Broker Load Board Plans:</span></th>
+                                        <th>Plan 1</th>
+                                        <th>Plan 2</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                      <tr *ngFor="let plan of table">
+                                        <th scope="row">{{ plan.feature }}</th>
+                                        <td><i *ngIf="plan.plan1" class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                        <td><i *ngIf="plan.plan2" class="dripicons-checkmark font-size-22 text-success"></i></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          
+                    </div>
+                  
+                    <div class="tab-pane" [ngClass]="{'active': activeTab === 'messages'}" id="messages" role="tabpanel">
+                        <div class="row mx-auto">
+                            <div class="col-md-12">
+                              <div class="d-flex mt-3">
+                                <div class="flex-grow-1 px-3 mt-2">
+                                  <p class="mb-0 fnt-lg-title text-black text-center">{{ title }}</p>
+                                </div>
+                              </div>
+                              <div class="d-flex">
+                                <div class="flex-grow-1 col-md-4 offset-md-4">
+                                  <h4 *ngFor="let item of combo" class="text-black">
+                                    {{ item }}
+                                  </h4>
+                                </div>
+                              </div>
+                              <h4 class="mb-0 text-center">
+                                <button type="button" class="btn rounded-pill px-4 p-2 btn-dark" (click)="buyNow('')">
+                                  Buy now
+                                </button>
+                              </h4>
+                            </div>
+                          </div>
+                          
+                    </div>
+                  </div>
+                  
+
+            </div>
+        </div>
+    </div>
+
+</div>
