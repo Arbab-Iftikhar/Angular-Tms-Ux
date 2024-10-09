@@ -1,0 +1,259 @@
+[
+    {
+        "Id": "SECURITY_DOMAIN_URI",
+        "URI": "",
+        "Modules": [
+            {
+                "Id": "SECURITY_URI",
+                "URI": "/shield",
+                "Pages": [
+                    {
+                        "Id": "ENTITY_USER_LOGIN",
+                        "URI": "/auth/user/login/authenticate",
+                        "UUID": "SECURITY_USER_LOGIN"
+                    },
+                    {
+                        "Id": "ENTITY_USER_SIGN_UP",
+                        "URI": "/auth/resend-otp",
+                        "UUID": "SECURITY_USER_RESEND_OTP"
+                    },
+                    {
+                        "Id": "ENTITY_USER_SIGN_UP",
+                        "URI": "/auth/user/register",
+                        "UUID": "SECURITY_USER_SIGNUP"
+                    },
+                    {
+                        "Id": "ENTITY_USER_OTP_VERIFICATION",
+                        "URI": "/auth/verifysignup-otp",
+                        "UUID": "SECURITY_USER_OTP_VERIFICATION"
+                    },
+                    {
+                        "Id": "ENTITY_USER_SIGNUP_STATUS_UPDAT",
+                        "URI": "/auth/updateCustomerApplication",
+                        "UUID": "SECURITY_SIGNUP_STATUS_UPDATE"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "Id": "SHIELD_DOMAIN_URI",
+        "URI": "",
+        "Modules": [
+            {
+                "Id": "SHIELD_URI",
+                "URI": "/shield",
+                "Pages": [
+                    {
+                        "Id": "ENTITY_SHIPPER",
+                        "URI": "/shippers/getAllShippers",
+                        "UUID": "SHIPPER"
+                    },
+                    {
+                        "Id": "ENTITY_COMPANY",
+                        "URI": "/company/getAllCompanies",
+                        "UUID": "COMPANY"
+                    },
+                    {
+                        "Id": "ENTITY_CREATE_SHIPMENT",
+                        "URI": "/shipments",
+                        "UUID": "CREATE_SHIPMENT"
+                    },
+                    {
+                        "Id": "ENTITY_UPDATE_SHIPMENT",
+                        "URI": "/shipments/{shipmentId}",
+                        "UUID": "UPDATE_SHIPMENT"
+                    },
+                    {
+                        "Id": "ENTITY_CREATE_SHIPPER",
+                        "URI": "/shippers/createNewShipper",
+                        "UUID": "CREATE_SHIPPER"
+                    },
+                    {
+                        "Id": "ENTITY_CREATE_COMPANY",
+                        "URI": "/company/createNewCompany",
+                        "UUID": "CREATE_COMPANY"
+                    },
+                    {
+                        "Id": "ENTITY_CREATE_COMPANY",
+                        "URI": "/shipments/getAllShipments",
+                        "UUID": "GET_ALL_SHIPMENTS"
+                    },
+                    {
+                        "Id": "ENTITY_CREATE_COMPANY",
+                        "URI": "/shipments/getAllShipmentsUntilPuNymber",
+                        "UUID": "GET_ALL_SHIPMENTS_PUNUMBER"
+                    },
+                
+                    {
+                        "Id": "ENTITY_CREATE_COMPANY",
+                        "URI": "/shipments/status/{status}",
+                        "UUID": "GET_SHIPMENT_BY_STATUS"
+                    },
+
+                    {
+                        "Id": "ENTITY_ALL_STATUSES",
+                        "URI": "/loadStatus/getStartedStatus",
+                        "UUID": "GET_STARTED_STATUS"
+                    },
+                    {
+                        "Id": "ENTITY_UPDATE_SHIPMENT_STATUS",
+                        "URI": "/shipments/updateShipmentStatus",
+                        "UUID": "UPDATE_SHIPMENT_STATUS"
+                    },
+                    {
+                        "Id": "ENTITY_UPDATE_SHIPMENT_STATUS",
+                        "URI": "/shipments/loadDate",
+                        "UUID": "GET_SHIPMENTS_BY_LOADDATE"
+                    },
+                    {
+                        "Id": "ENTITY_CREATE_DRIVER",
+                        "URI": "/driver/createNewDriver",
+                        "UUID": "CREATE_DRIVER"
+                    },
+                    {
+                        "Id": "ENTITY_CREATE_COMMENT",
+                        "URI": "/comment/addComment",
+                        "UUID": "CREATE_COMMENT"
+                    },
+                    {
+                        "Id": "ENTITY_ALL_COMMENTS",
+                        "URI": "/comment/getAllComments",
+                        "UUID": "GET_ALL_COMMENTS"
+                    },
+                    {
+                        "Id": "ENTITY_ALL_DRIVERS",
+                        "URI": "/driver/getAllDrivers",
+                        "UUID": "GET_ALL_DRIVERS"
+                    },
+                    {
+                        "Id": "ENTITY_UPDATE_SHIPMENT_STATUS",
+                        "URI": "/getShipmentCordinates",
+                        "UUID": "GET_SHIPMENT_COORDINATES"
+                    },
+                    {
+                        "Id": "ENTITY_ALL_STATUSES",
+                        "URI": "/loadStatus/getAllStatus",
+                        "UUID": "GET_ALL_STATUSES"
+                    },
+                    {
+                        "Id": "ENTITY_ALL_SHIPMENT_DOCUMENTS",
+                        "URI": "/addDOandBIL",
+                        "UUID": "SHIPMENT_DOCUMENTS"
+                    },
+                    {
+                        "Id": "ENTITY_ALL_STATUSES",
+                        "URI": "/getProofOfDelivery",
+                        "UUID": "GET_PROOF_OF_DELIVERY"
+                    },
+                    {
+                        "Id": "ENTITY_ALL_STATUSES",
+                        "URI": "/getProofOfPickup",
+                        "UUID": "GET_PROOF_OF_PICKUP"
+                    },
+                    {
+                        "Id": "ENTITY_IS_PINNED",
+                        "URI": "/shipments/isPinned/{shipmentId}",
+                        "UUID": "IS_PINNED"
+                    },
+                    {
+                        "Id": "ENTITY_GET_ALL_PINNED_LOADS",
+                        "URI": "/shipments/getAllPinnedLoads",
+                        "UUID": "GET_ALL_PINNED_LOADS"
+                    },
+                    {
+                        "Id": "ENTITY_GET_ALL_ACTIVE_LOADS",
+                        "URI": "/shipments/getAllActiveLoads/{status}",
+                        "UUID": "GET_ALL_ACTIVE_LOADS"
+                    },
+                    {
+                        "Id": "ENTITY_ALL_STATUSES",
+                        "URI": "/getProofOfverifyTruck",
+                        "UUID": "GET_PROOF_OF_VERIFY_TRUCK"
+                    },
+                    {
+                        "Id": "ENTITY_ALLOT_PICKUP_NUMBER",
+                        "URI": "/shipments/allotPickupNumber",
+                        "UUID": "ALLOT_PICKUP_NUMBER"
+                    },
+                    {
+                        "Id": "ENTITY_GET_CITY_LOADS",
+                        "URI": "/shipments/getAllCityLoads",
+                        "UUID": "GET_CITY_LOADS"
+                    },
+                    {
+                        "Id": "ENTITY_SET_DRIVER_ID",
+                        "URI": "/shipments/setDriverId",
+                        "UUID": "SET_DRIVER_ID"
+                    },
+                   {
+                    "Id": "ENTITY_DELETE_DRIVER",
+                    "URI": "/driver/{id}",
+                    "UUID": "DELETE_DRIVER"
+                   },
+                  {
+                    "Id": "ENTITY_UPDATE_DRIVER",
+                    "URI": "/driver/updateDriver",
+                    "UUID": "UPDATE_DRIVER"
+                   },
+                   {
+                    "Id": "ENTITY_GET_COMPANAY",
+                    "URI": "/company/getAllCompanies",
+                    "UUID": "GET_ALL_COMPANIES"
+                   },
+                   {
+                    "Id": "ENTITY_DELETE_COMPANAY",
+                    "URI": "/company/deleteCompanyByID",
+                    "UUID": "DELETE_COMPANY"
+                   },
+                   {
+                    "Id": "ENTITY_UPDATE_COMPANAY",
+                    "URI": "/company/updateCompanyDetails",
+                    "UUID": "UPDATE_COMPANY"
+                   },
+                   {
+                    "Id": "ENTITY_DELETE_SHIPPER",
+                    "URI": "/shippers/deleteShipperByID",
+                    "UUID": "DELETE_SHIPPER"
+                   },
+                   {
+                    "Id": "ENTITY_UPDATE_SHIPPER",
+                    "URI": "/shippers/updateShipperDetails",
+                    "UUID": "UPDATE_SHIPPER"
+                   },
+                   {
+                    "Id": "ENTITY_UPDATE_SHIPPER",
+                    "URI": "/proof-of-pickup",
+                    "UUID": "PROOF_OF_PICKUP"
+                   },
+                   {
+                    "Id": "ENTITY_UPDATE_SHIPPER",
+                    "URI": "/proof-of-delivery",
+                    "UUID": "PROOF_OF_DELIVERY"
+                   },
+                   {
+                    "Id": "ENTITY_UPDATE_SHIPPER",
+                    "URI": "/shipments/getAllCities",
+                    "UUID": "GET_ALL_CITIES"
+                   },
+                   {
+                    "Id": "ENTITY_GET_ALL_VERIFIED_DOCUMENTS",
+                    "URI": "/getAllVerifiedDocuments",
+                    "UUID": "GET_ALL_VERIFIED_DOCUMENTS"
+                   },
+                   {
+                    "Id": "ENTITY_GET_ALL_USERS",
+                    "URI": "/getAllUsers",
+                    "UUID": "GET_ALL_USERS"
+                   },
+                   {
+                    "Id": "ENTITY_CANCEL_SHIPMENT",
+                    "URI": "/shipments/cancelStatus",
+                    "UUID": "CANCEL_SHIPMENT"
+                   }
+                ]
+            }
+            
+        ]
+    }
+]
